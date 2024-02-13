@@ -10,7 +10,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 public class BookCreationDTO {
     @NotBlank(message = "A book must have a title.")
     private String title;
-    @NotBlank(message = "A book must have authors.")
+    @NotEmpty(message = "A book must have authors.")
     private String[] authors;
     @NotNull(message = "A book must have a specified number of pages.")
     @Positive(message = "A book must have a number of pages more than 0.")

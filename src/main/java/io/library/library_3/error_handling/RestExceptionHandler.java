@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import io.library.library_3.error_handling.exceptions.DuplicateEntityException;
 import io.library.library_3.error_handling.exceptions.EntityNotFoundException;
 
 @ControllerAdvice
@@ -27,6 +28,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ErrorResponse handleEntityNotFoundException(EntityNotFoundException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
+
+        return errorResponse;
+    }
+
+    @ExceptionHandler(DuplicateEntityException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ErrorResponse handleDuplicateEntityException(DuplicateEntityException ex) {
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
 
         return errorResponse;
