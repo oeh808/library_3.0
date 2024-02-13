@@ -2,8 +2,10 @@ package io.library.library_3.librarian.entity;
 
 import io.library.library_3.user.entity.User;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "Librarians")
 public class Librarian extends User {
     private int yearsOfExperience;
 
