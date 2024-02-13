@@ -78,9 +78,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book updateBook(Book book) {
         getBook(book.getRefId());
-        bookRepo.save(book);
-
-        return book;
+        return bookRepo.save(book);
     }
 
     @Override

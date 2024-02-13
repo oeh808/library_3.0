@@ -61,18 +61,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student updateStudent(Student student) {
         getStudent(student.getId());
-        studentRepo.save(student);
-
-        return student;
+        return studentRepo.save(student);
     }
 
     @Override
     public Student approveStudent(int id) {
         Student student = getStudent(id);
         student.setRegistered(true);
-        studentRepo.save(student);
 
-        return student;
+        return studentRepo.save(student);
     }
 
     @Override
