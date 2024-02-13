@@ -16,11 +16,11 @@ public interface BookService {
 
     public List<Book> getBooks(String[] arr, BookSearchType bookSearchType);
 
-    public Book getBook(String id);
+    public Book getBook(String refId);
 
     // Update
     public Book updateBook(Book book);
 
     // Delete
-    public void deleteBook(int id);
+    public void deleteBook(String refId);
 }

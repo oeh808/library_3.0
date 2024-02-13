@@ -60,7 +60,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book getBook(String refId) {
-        Optional<Book> book = bookRepo.findByRefId(refId);
+        Optional<Book> book = bookRepo.findById(refId);
         if (book.isPresent()) {
             return book.get();
         } else {
@@ -75,8 +75,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteBook(int id) {
-        bookRepo.deleteById(id);
+    public void deleteBook(String refId) {
+        bookRepo.deleteById(refId);
     }
 
 }
