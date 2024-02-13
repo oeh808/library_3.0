@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "Students")
 public class Student extends User {
     private String college;
     private String address;
