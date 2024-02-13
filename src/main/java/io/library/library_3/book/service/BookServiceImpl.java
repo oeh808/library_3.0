@@ -6,9 +6,11 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import io.library.library_3.book.BookExceptionMessages;
 import io.library.library_3.book.entity.Book;
 import io.library.library_3.book.repo.BookRepo;
 import io.library.library_3.enums.BookSearchType;
+import io.library.library_3.error_handling.exceptions.EntityNotFoundException;
 import io.library.library_3.search.LinearSearchService;
 import io.library.library_3.search.SearchService;
 
@@ -62,8 +64,7 @@ public class BookServiceImpl implements BookService {
         if (book.isPresent()) {
             return book.get();
         } else {
-            // Book does not exist with given id
-            return null;
+            throw new EntityNotFoundException(BookExceptionMessages.ID_NOT_FOUND(id));
         }
     }
 
@@ -73,8 +74,7 @@ public class BookServiceImpl implements BookService {
         if (book.isPresent()) {
             return book.get();
         } else {
-            // Book does not exist with given refId
-            return null;
+            throw new EntityNotFoundException(BookExceptionMessages.REFID_NOT_FOUND(refId));
         }
     }
 
