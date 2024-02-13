@@ -68,7 +68,10 @@ public class BookController {
     // Update
     @PutMapping("/{refId}")
     public Book updateBook(@PathVariable String refId, @Valid @RequestBody BookCreationDTO dto) {
-        return bookService.updateBook(bookMapper.toBook(dto));
+        Book book = bookMapper.toBook(dto);
+        book.setRefId(refId);
+
+        return bookService.updateBook(book);
     }
 
     // Delete
