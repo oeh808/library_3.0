@@ -26,6 +26,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void createBook(Book book) {
+        Optional<Book> opBook = bookRepo.findById(book.getRefId());
+        if (opBook.isPresent()) {
+            // If the book already exists then its quantity is increased
+            book.setQuantity(book.getQuantity() + opBook.get().getQuantity());
+        }
+
         bookRepo.save(book);
     }
 
