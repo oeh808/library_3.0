@@ -11,6 +11,8 @@ public interface StudentService {
     // Read
     public List<Student> getStudents();
 
+    public List<Student> getStudentsByName(String name);
+
     public List<Student> getStudentsByAdress(String address);
 
     public List<Student> getStudentsByCollege(String college);

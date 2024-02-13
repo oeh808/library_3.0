@@ -42,6 +42,11 @@ public class StudentController {
         return studentService.getStudents();
     }
 
+    @GetMapping("/byName")
+    public List<Student> getStudentsByName(@RequestBody String name) {
+        return studentService.getStudentsByName(name);
+    }
+
     @GetMapping("/byAddress")
     public List<Student> getStudentsByAdress(@RequestBody String address) {
         return studentService.getStudentsByAdress(address);
