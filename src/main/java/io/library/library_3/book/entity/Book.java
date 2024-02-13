@@ -14,8 +14,9 @@ public class Book {
     private int id;
 
     @Column(unique = true)
-    private String refId;
+    private String refId = "";
 
+    @Column(unique = true)
     private String title;
 
     private String[] authors;
@@ -30,13 +31,24 @@ public class Book {
         super();
     }
 
-    public Book(String refId, String title, String[] authors, int numOfPages, int quantity, String[] categories) {
-        this.refId = refId;
+    public Book(String title, String[] authors, int numOfPages, int quantity, String[] categories) {
         this.title = title;
+        generateRefId(title);
         this.authors = authors;
         this.numOfPages = numOfPages;
         this.quantity = quantity;
         this.categories = categories;
+    }
+
+    public void generateRefId(String title) {
+        // Custom way of generating unique refId's
+        for (int i = 0; i < title.length(); i++) {
+            if (i % 2 == 0) {
+                this.refId += title.charAt(i);
+            } else {
+                this.refId += i;
+            }
+        }
     }
 
     // Getters and Setters
