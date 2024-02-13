@@ -3,11 +3,14 @@ package io.library.library_3.student.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import io.library.library_3.error_handling.exceptions.EntityNotFoundException;
 import io.library.library_3.student.StudentExceptionMessages;
 import io.library.library_3.student.entity.Student;
 import io.library.library_3.student.repo.StudentRepo;
 
+@Service
 public class StudentServiceImpl implements StudentService {
     private StudentRepo studentRepo;
 
