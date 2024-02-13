@@ -2,7 +2,6 @@ package io.library.library_3.book.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -10,10 +9,6 @@ import jakarta.persistence.Table;
 @Table(name = "Books")
 public class Book {
     @Id
-    @GeneratedValue
-    private int id;
-
-    @Column(unique = true)
     private String refId = "";
 
     @Column(unique = true)
@@ -53,14 +48,6 @@ public class Book {
 
     // Getters and Setters
     // ______________________________________________________________________________
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getRefId() {
         return refId;
     }

@@ -59,17 +59,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book getBook(int id) {
-        Optional<Book> book = bookRepo.findById(id);
-        if (book.isPresent()) {
-            return book.get();
-        } else {
-            throw new EntityNotFoundException(BookExceptionMessages.ID_NOT_FOUND(id));
-        }
-    }
-
-    @Override
-    public Book getBookByRefId(String refId) {
+    public Book getBook(String refId) {
         Optional<Book> book = bookRepo.findByRefId(refId);
         if (book.isPresent()) {
             return book.get();
@@ -81,7 +71,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book updateBook(Book book) {
         bookRepo.save(book);
-        return getBook(book.getId());
+        return getBook(book.getRefId());
     }
 
     @Override

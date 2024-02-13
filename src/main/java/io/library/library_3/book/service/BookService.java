@@ -16,9 +16,7 @@ public interface BookService {
 
     public List<Book> getBooks(String[] arr, BookSearchType bookSearchType);
 
-    public Book getBook(int id);
-
-    public Book getBookByRefId(String refId);
+    public Book getBook(String id);
 
     // Update
     public Book updateBook(Book book);
