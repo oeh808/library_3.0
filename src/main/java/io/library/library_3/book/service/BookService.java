@@ -7,7 +7,7 @@ import io.library.library_3.enums.BookSearchType;
 
 public interface BookService {
     // Create
-    public void createBook(Book book);
+    public Book createBook(Book book);
 
     // Read
     public List<Book> getBooks();
@@ -22,5 +22,5 @@ public interface BookService {
     public Book updateBook(Book book);
 
     // Delete
-    public void deleteBook(String refId);
+    public Book deleteBook(String refId);
 }

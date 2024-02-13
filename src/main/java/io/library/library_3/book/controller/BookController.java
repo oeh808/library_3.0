@@ -35,8 +35,8 @@ public class BookController {
 
     // Create
     @PostMapping()
-    public void addBook(@Valid @RequestBody BookCreationDTO dto) {
-        bookService.createBook(bookMapper.toBook(dto));
+    public Book addBook(@Valid @RequestBody BookCreationDTO dto) {
+        return bookService.createBook(bookMapper.toBook(dto));
     }
 
     // Read
@@ -73,7 +73,7 @@ public class BookController {
 
     // Delete
     @DeleteMapping("/{refId}")
-    public void deleteBook(@PathVariable String refId) {
-        bookService.deleteBook(refId);
+    public Book deleteBook(@PathVariable String refId) {
+        return bookService.deleteBook(refId);
     }
 }

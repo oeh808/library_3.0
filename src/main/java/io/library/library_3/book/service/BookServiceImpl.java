@@ -26,14 +26,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void createBook(Book book) {
+    public Book createBook(Book book) {
         Optional<Book> opBook = bookRepo.findById(book.getRefId());
         if (opBook.isPresent()) {
             throw new DuplicateEntityException(
                     BookExceptionMessages.BOOK_WITH_TITLE_EXISTS("(" + book.getTitle() + ")"));
         }
 
-        bookRepo.save(book);
+        return bookRepo.save(book);
     }
 
     @Override
@@ -84,8 +84,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteBook(String refId) {
+    public Book deleteBook(String refId) {
+        Book book = getBook(refId);
         bookRepo.deleteById(refId);
+
+        return book;
     }
 
 }
