@@ -20,7 +20,7 @@ public interface StudentService {
     public Student getStudent(int id);
 
     // Update
-    public Student updaStudent(Student student);
+    public Student updateStudent(Student student);
 
     public Student approveStudent(Student student);
 

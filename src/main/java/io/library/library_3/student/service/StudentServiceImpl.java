@@ -54,7 +54,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student updaStudent(Student student) {
+    public Student updateStudent(Student student) {
         getStudent(student.getId());
         studentRepo.save(student);
 
