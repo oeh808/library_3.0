@@ -84,11 +84,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book deleteBook(String refId) {
-        Book book = getBook(refId);
+    public void deleteBook(String refId) {
+        getBook(refId);
         bookRepo.deleteById(refId);
-
-        return book;
     }
 
 }

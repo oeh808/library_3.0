@@ -25,5 +25,5 @@ public interface StudentService {
     public Student approveStudent(int id);
 
     // Delete
-    public Student removeStudent(int id);
+    public void removeStudent(int id);
 }

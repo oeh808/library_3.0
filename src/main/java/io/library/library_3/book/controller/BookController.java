@@ -76,7 +76,7 @@ public class BookController {
 
     // Delete
     @DeleteMapping("/{refId}")
-    public Book deleteBook(@PathVariable String refId) {
-        return bookService.deleteBook(refId);
+    public void deleteBook(@PathVariable String refId) {
+        bookService.deleteBook(refId);
     }
 }

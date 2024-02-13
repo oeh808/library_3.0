@@ -64,7 +64,7 @@ public class StudentController {
 
     // Update
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable int id, @RequestBody StudentRegisterationDTO dto) {
+    public Student updateStudent(@PathVariable int id, @Valid @RequestBody StudentRegisterationDTO dto) {
         Student student = studentMapper.toStudent(dto);
         student.setId(id);
         return studentService.updateStudent(student);
@@ -77,7 +77,7 @@ public class StudentController {
 
     // Delete
     @DeleteMapping("/{id}")
-    public Student removeStudent(@PathVariable int id) {
-        return studentService.removeStudent(id);
+    public void removeStudent(@PathVariable int id) {
+        studentService.removeStudent(id);
     }
 }

@@ -22,5 +22,5 @@ public interface BookService {
     public Book updateBook(Book book);
 
     // Delete
-    public Book deleteBook(String refId);
+    public void deleteBook(String refId);
 }
