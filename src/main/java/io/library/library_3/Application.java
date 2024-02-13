@@ -1,4 +1,4 @@
-package io.library.library_30;
+package io.library.library_3;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
