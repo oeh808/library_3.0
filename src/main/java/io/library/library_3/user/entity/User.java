@@ -1,5 +1,6 @@
 package io.library.library_3.user.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.library.library_3.borrowed_book.entity.BorrowedBook;
@@ -25,12 +26,12 @@ public abstract class User {
     private List<BorrowedBook> borrowedBooks;
 
     public User() {
-
+        this.borrowedBooks = new ArrayList<BorrowedBook>();
     }
 
-    public User(String name, List<BorrowedBook> borrowedBooks) {
+    public User(String name) {
         this.name = name;
-        this.borrowedBooks = borrowedBooks;
+        this.borrowedBooks = new ArrayList<BorrowedBook>();
     }
 
     // Getters and Setters
