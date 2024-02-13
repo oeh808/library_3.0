@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 public class Student extends User {
     private String college;
     private String address;
-    private boolean registered;
+    private boolean registered = false;
 
     public Student() {
         super();
@@ -19,7 +19,6 @@ public class Student extends User {
         super(name);
         this.college = college;
         this.address = address;
-        registered = false;
     }
 
     // Getters and Setters
