@@ -62,8 +62,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student approveStudent(Student student) {
-        getStudent(student.getId());
+    public Student approveStudent(int id) {
+        Student student = getStudent(id);
         student.setRegistered(true);
         studentRepo.save(student);
 

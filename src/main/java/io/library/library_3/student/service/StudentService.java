@@ -22,7 +22,7 @@ public interface StudentService {
     // Update
     public Student updateStudent(Student student);
 
-    public Student approveStudent(Student student);
+    public Student approveStudent(int id);
 
     // Delete
     public Student removeStudent(int id);
