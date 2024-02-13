@@ -10,6 +10,7 @@ import io.library.library_3.book.BookExceptionMessages;
 import io.library.library_3.book.entity.Book;
 import io.library.library_3.book.repo.BookRepo;
 import io.library.library_3.enums.BookSearchType;
+import io.library.library_3.error_handling.exceptions.DuplicateEntityException;
 import io.library.library_3.error_handling.exceptions.EntityNotFoundException;
 import io.library.library_3.search.LinearSearchService;
 import io.library.library_3.search.SearchService;
@@ -28,8 +29,7 @@ public class BookServiceImpl implements BookService {
     public void createBook(Book book) {
         Optional<Book> opBook = bookRepo.findById(book.getRefId());
         if (opBook.isPresent()) {
-            // If the book already exists then its quantity is increased
-            book.setQuantity(book.getQuantity() + opBook.get().getQuantity());
+            throw new DuplicateEntityException(BookExceptionMessages.BOOK_WITH_TITLE_EXISTS(book.getTitle()));
         }
 
         bookRepo.save(book);
