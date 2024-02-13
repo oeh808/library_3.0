@@ -72,7 +72,7 @@ public class BookController {
     }
 
     // Delete
-    @DeleteMapping("path/{refId}")
+    @DeleteMapping("/{refId}")
     public void deleteBook(@PathVariable String refId) {
         bookService.deleteBook(refId);
     }
