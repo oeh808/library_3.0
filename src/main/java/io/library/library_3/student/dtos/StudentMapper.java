@@ -1,7 +1,10 @@
 package io.library.library_3.student.dtos;
 
+import org.springframework.stereotype.Component;
+
 import io.library.library_3.student.entity.Student;
 
+@Component
 public class StudentMapper {
     // To DTO
 
