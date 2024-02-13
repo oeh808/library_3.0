@@ -30,6 +30,11 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
         throw new UnsupportedOperationException("Unimplemented method 'getUsersBorrowingBook'");
     }
 
+    public List<Book> getBooksBorrowedByUser(User user) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getBooksBorrowedByUser'");
+    }
+
     @Override
     public BorrowedBook updateBorrowedBookDate(Date dateDue) {
         // TODO Auto-generated method stub

@@ -17,6 +17,8 @@ public interface BorrowedBookService {
 
     public List<User> getUsersBorrowingBook(Book book);
 
+    public List<Book> getBooksBorrowedByUser(User user);
+
     // Update
     public BorrowedBook updateBorrowedBookDate(Date dateDue);
 
