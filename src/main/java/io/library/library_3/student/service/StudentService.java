@@ -6,7 +6,7 @@ import io.library.library_3.student.entity.Student;
 
 public interface StudentService {
     // Create
-    public Student registerStudent(Student student);
+    public Student signUpStudent(Student student);
 
     // Read
     public List<Student> getStudents();

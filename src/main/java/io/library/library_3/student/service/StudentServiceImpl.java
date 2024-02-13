@@ -19,7 +19,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student registerStudent(Student student) {
+    public Student signUpStudent(Student student) {
         return studentRepo.save(student);
     }
 
