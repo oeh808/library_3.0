@@ -3,6 +3,9 @@ package io.library.library_3.user.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+
 import io.library.library_3.borrowed_book.entity.BorrowedBook;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +19,12 @@ import jakarta.persistence.OneToMany;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "sequence-generator")
+    @GenericGenerator(name = "sequence-generator", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+            @Parameter(name = "sequence_name", value = "user_sequence"),
+            @Parameter(name = "initial_value", value = "100"),
+            @Parameter(name = "increment_size", value = "1")
+    })
     @Column(name = "user_id")
     private int id;
     private String name;
