@@ -13,7 +13,7 @@ import io.library.library_3.user.entity.User;
 public class BorrowedBookServiceImpl implements BorrowedBookService {
 
     @Override
-    public void borrowBook(BorrowedBook borrowedBook) {
+    public void borrowBook(String refId, int userId, Date dateDue) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'borrowBook'");
     }
@@ -25,24 +25,25 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
     }
 
     @Override
-    public List<User> getUsersBorrowingBook(Book book) {
+    public List<User> getUsersBorrowingBook(String refId) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getUsersBorrowingBook'");
     }
 
-    public List<Book> getBooksBorrowedByUser(User user) {
+    @Override
+    public List<Book> getBooksBorrowedByUser(int userId) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getBooksBorrowedByUser'");
     }
 
     @Override
-    public BorrowedBook updateBorrowedBookDate(Date dateDue) {
+    public BorrowedBook updateBorrowedBookDate(BorrowedBook borrowedBook) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'updateBorrowedBookDate'");
     }
 
     @Override
-    public void returnBook(BorrowedBook borrowedBook) {
+    public void returnBook(int id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'returnBook'");
     }

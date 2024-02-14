@@ -9,19 +9,19 @@ import io.library.library_3.user.entity.User;
 
 public interface BorrowedBookService {
     // Create
-    public void borrowBook(BorrowedBook borrowedBook);
+    public void borrowBook(String refId, int userId, Date dateDue);
 
     // Read
     // No need to retrieve borrowed books with BorrowedBook type
     public List<Book> getBooksBorrowed();
 
-    public List<User> getUsersBorrowingBook(Book book);
+    public List<User> getUsersBorrowingBook(String refId);
 
-    public List<Book> getBooksBorrowedByUser(User user);
+    public List<Book> getBooksBorrowedByUser(int userId);
 
     // Update
-    public BorrowedBook updateBorrowedBookDate(Date dateDue);
+    public BorrowedBook updateBorrowedBookDate(BorrowedBook borrowedBook);
 
     // Delete
-    public void returnBook(BorrowedBook borrowedBook);
+    public void returnBook(int id);
 }
