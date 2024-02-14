@@ -22,6 +22,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import io.library.library_3.error_handling.exceptions.DuplicateEntityException;
 import io.library.library_3.error_handling.exceptions.EntityNotFoundException;
 import io.library.library_3.error_handling.exceptions.InvalidEnumException;
+import io.library.library_3.error_handling.exceptions.OutOfStockException;
+import io.library.library_3.error_handling.exceptions.UnauthorizedActionException;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -53,6 +55,31 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return errorResponse;
     }
 
+    @ExceptionHandler(OutOfStockException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ErrorResponse handleOutOfStockException(OutOfStockException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
+
+        return errorResponse;
+    }
+
+    @ExceptionHandler(UnauthorizedActionException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ResponseBody
+    public ErrorResponse handleUnauthorizedActionException(UnauthorizedActionException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
+
+        return errorResponse;
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(
+            HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
+        return new ResponseEntity<Object>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
@@ -66,12 +93,5 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         Map<String, List<String>> errorResponse = new HashMap<>();
         errorResponse.put("errors", errors);
         return errorResponse;
-    }
-
-    @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(
-            HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
-        return new ResponseEntity<Object>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 }

@@ -14,6 +14,8 @@ import io.library.library_3.borrowed_book.entity.BorrowedBook;
 import io.library.library_3.borrowed_book.repo.BorrowedBookRepo;
 import io.library.library_3.enums.UserTypeCustom;
 import io.library.library_3.error_handling.exceptions.EntityNotFoundException;
+import io.library.library_3.error_handling.exceptions.OutOfStockException;
+import io.library.library_3.error_handling.exceptions.UnauthorizedActionException;
 import io.library.library_3.librarian.LibrarianExceptionMessages;
 import io.library.library_3.librarian.entity.Librarian;
 import io.library.library_3.librarian.repo.LibrarianRepo;
@@ -38,9 +40,47 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
     }
 
     @Override
-    public void borrowBook(String refId, int userId, Date dateDue, UserTypeCustom userType) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'borrowBook'");
+    public BorrowedBook borrowBook(String refId, int userId, Date dateDue, UserTypeCustom userType) {
+        Optional<Book> opBook = bookRepo.findById(refId);
+        User user;
+
+        // Check if the book exists
+        if (opBook.isEmpty())
+            throw new EntityNotFoundException(BookExceptionMessages.REFID_NOT_FOUND(refId));
+
+        // Check if the user exists and is allowed to borrow
+        if (userType.equals(UserTypeCustom.STUDENT)) {
+            Optional<Student> opStudent = studentRepo.findById(userId);
+            if (opStudent.isEmpty()) {
+                throw new EntityNotFoundException(StudentExceptionMessages.ID_NOT_FOUND(userId));
+            } else if (!opStudent.get().isRegistered()) {
+                // Unregistered students cannot borrow
+                throw new UnauthorizedActionException(StudentExceptionMessages.NOT_REGISTERED);
+            } else {
+                user = opStudent.get();
+            }
+        } else {
+            Optional<Librarian> opLibrarian = librarianRepo.findById(userId);
+            if (opLibrarian.isEmpty()) {
+                throw new EntityNotFoundException(LibrarianExceptionMessages.ID_NOT_FOUND(userId));
+            } else {
+                user = opLibrarian.get();
+            }
+        }
+
+        Book book = opBook.get();
+
+        // Check if book is in stock
+        if (book.getQuantity() < 1) {
+            throw new OutOfStockException(BorrowedBookExceptionMessages.BOOK_OUT_OF_STOCK(book.getTitle()));
+        }
+
+        // Decrement quantity of books available
+        book.setQuantity(book.getQuantity() - 1);
+        bookRepo.save(book);
+
+        // Finally borrow book
+        return borrowedBookRepo.save(new BorrowedBook(book, user, dateDue));
     }
 
     @Override
