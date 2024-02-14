@@ -85,7 +85,7 @@ public class BorrowedBookController {
                 .toDTO(borrowedBookService.updateBorrowedBookDate(borrowedBook, UserTypeCustom.STUDENT));
     }
 
-    @PutMapping("/librarian/{id}")
+    @PutMapping("/librarians/{id}")
     public BorrowedBookReadingDTO updateLibrarianBorrowedBookDate(@PathVariable int id,
             @Valid @RequestBody BorrowedBookCreationDTO dto) {
         BorrowedBook borrowedBook = borrowedBookMapper.toBorrowedBook(dto);
