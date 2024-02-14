@@ -72,7 +72,7 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
 
         Book book = opBook.get();
 
-        if (borrowedBookRepo.findUserBorrowingBook(book).isPresent()) {
+        if (borrowedBookRepo.findUserBorrowingBook(book, user).isPresent()) {
             // User has already borrowed this book
             throw new DuplicateEntityException(BorrowedBookExceptionMessages.BOOK_ALREADY_BORROWED(book.getTitle()));
         }
