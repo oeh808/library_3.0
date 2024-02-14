@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.library.library_3.librarian.dtos.LibrarianCreationDTO;
 import io.library.library_3.librarian.dtos.LibrarianMapper;
+import io.library.library_3.librarian.dtos.LibrarianReadingDTO;
 import io.library.library_3.librarian.entity.Librarian;
 import io.library.library_3.librarian.service.LibrarianService;
 
@@ -31,30 +32,30 @@ public class LibrarianController {
 
     // Create
     @PostMapping()
-    public Librarian addLibrarian(@RequestBody LibrarianCreationDTO dto) {
+    public LibrarianReadingDTO addLibrarian(@RequestBody LibrarianCreationDTO dto) {
         Librarian librarian = librarianMapper.toLibrarian(dto);
 
-        return librarianService.addLibrarian(librarian);
+        return librarianMapper.toReadingDTO(librarianService.addLibrarian(librarian));
     }
 
     // Read
     @GetMapping()
-    public List<Librarian> getLibrarians() {
-        return librarianService.getLibrarians();
+    public List<LibrarianReadingDTO> getLibrarians() {
+        return librarianMapper.toReadingDTO(librarianService.getLibrarians());
     }
 
     @GetMapping("/{id}")
-    public Librarian getLibrarian(@PathVariable int id) {
-        return librarianService.getLibrarian(id);
+    public LibrarianReadingDTO getLibrarian(@PathVariable int id) {
+        return librarianMapper.toReadingDTO(librarianService.getLibrarian(id));
     }
 
     // Update
     @PutMapping("/{id}")
-    public Librarian updateLibrarian(@PathVariable int id, @RequestBody LibrarianCreationDTO dto) {
+    public LibrarianReadingDTO updateLibrarian(@PathVariable int id, @RequestBody LibrarianCreationDTO dto) {
         Librarian librarian = librarianMapper.toLibrarian(dto);
         librarian.setId(id);
 
-        return librarianService.updateLibrarian(librarian);
+        return librarianMapper.toReadingDTO(librarianService.updateLibrarian(librarian));
     }
 
     // Delete
