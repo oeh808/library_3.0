@@ -136,7 +136,9 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
     @Override
     public BorrowedBook updateBorrowedBookDate(BorrowedBook borrowedBook,
             UserTypeCustom userType) {
-        getBorrowedBook(borrowedBook.getId());
+        BorrowedBook bb = getBorrowedBook(borrowedBook.getId());
+        borrowedBook.setBook(bb.getBook());
+        borrowedBook.setUser(bb.getUser());
 
         User user = borrowedBook.getUser();
         if (userType.equals(UserTypeCustom.STUDENT)) {
