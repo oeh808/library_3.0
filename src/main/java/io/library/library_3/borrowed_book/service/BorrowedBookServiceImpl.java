@@ -13,6 +13,7 @@ import io.library.library_3.borrowed_book.BorrowedBookExceptionMessages;
 import io.library.library_3.borrowed_book.entity.BorrowedBook;
 import io.library.library_3.borrowed_book.repo.BorrowedBookRepo;
 import io.library.library_3.enums.UserTypeCustom;
+import io.library.library_3.error_handling.exceptions.DuplicateEntityException;
 import io.library.library_3.error_handling.exceptions.EntityNotFoundException;
 import io.library.library_3.error_handling.exceptions.OutOfStockException;
 import io.library.library_3.error_handling.exceptions.UnauthorizedActionException;
@@ -45,8 +46,9 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
         User user;
 
         // Check if the book exists
-        if (opBook.isEmpty())
+        if (opBook.isEmpty()) {
             throw new EntityNotFoundException(BookExceptionMessages.REFID_NOT_FOUND(refId));
+        }
 
         // Check if the user exists and is allowed to borrow
         if (userType.equals(UserTypeCustom.STUDENT)) {
@@ -69,6 +71,11 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
         }
 
         Book book = opBook.get();
+
+        if (borrowedBookRepo.findUserBorrowingBook(book).isPresent()) {
+            // User has already borrowed this book
+            throw new DuplicateEntityException(BorrowedBookExceptionMessages.BOOK_ALREADY_BORROWED(book.getTitle()));
+        }
 
         // Check if book is in stock
         if (book.getQuantity() < 1) {

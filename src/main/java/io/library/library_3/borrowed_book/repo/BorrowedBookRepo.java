@@ -1,6 +1,7 @@
 package io.library.library_3.borrowed_book.repo;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,14 +12,18 @@ import io.library.library_3.borrowed_book.entity.BorrowedBook;
 import io.library.library_3.user.entity.User;
 
 public interface BorrowedBookRepo extends JpaRepository<BorrowedBook, Integer> {
-    @Query("SELECT DISTINCT bb.book FROM BorrowedBook bb")
-    public List<Book> findAllBooks();
+        @Query("SELECT DISTINCT bb.book FROM BorrowedBook bb")
+        public List<Book> findAllBooks();
 
-    @Query("SELECT bb.user FROM BorrowedBook bb " +
-            "WHERE bb.book = :book")
-    public List<User> findUsersBorrowingBook(@Param("book") Book book);
+        @Query("SELECT bb.user FROM BorrowedBook bb " +
+                        "WHERE bb.book = :book")
+        public List<User> findUsersBorrowingBook(@Param("book") Book book);
 
-    @Query("SELECT bb.book FROM BorrowedBook bb " +
-            "WHERE bb.user = :user")
-    public List<Book> findBooksBorrowedByUser(@Param("user") User user);
+        @Query("SELECT bb.book FROM BorrowedBook bb " +
+                        "WHERE bb.user = :user")
+        public List<Book> findBooksBorrowedByUser(@Param("user") User user);
+
+        @Query("SELECT bb.user FROM BorrowedBook bb " +
+                        "WHERE bb.book = :book")
+        public Optional<User> findUserBorrowingBook(@Param("book") Book book);
 }
