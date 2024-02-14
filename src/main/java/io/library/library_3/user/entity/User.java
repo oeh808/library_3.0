@@ -20,7 +20,7 @@ public abstract class User {
     @Column(name = "user_id")
     private int id;
     private String name;
-    @OneToMany(mappedBy = "id")
+    @OneToMany
     private List<BorrowedBook> borrowedBooks;
 
     public User() {
