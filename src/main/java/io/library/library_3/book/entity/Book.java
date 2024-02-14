@@ -27,7 +27,7 @@ public class Book {
     }
 
     public Book(String title, String[] authors, int numOfPages, int quantity, String[] categories) {
-        // FIXME: Determine if title search will be case sensitive
+        // FIXME: Use ignore case in SQL queries instead
         title = title.toLowerCase();
         this.title = title;
         generateRefId(title);
