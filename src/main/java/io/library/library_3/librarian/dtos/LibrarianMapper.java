@@ -7,14 +7,6 @@ import io.library.library_3.librarian.entity.Librarian;
 
 public class LibrarianMapper {
     // To DTO
-    public LibrarianCreationDTO toCreationDTO(Librarian librarian) {
-        LibrarianCreationDTO dto = new LibrarianCreationDTO();
-        dto.setName(librarian.getName());
-        dto.setYearsOfExperience(librarian.getYearsOfExperience());
-
-        return dto;
-    }
-
     public LibrarianReadingDTO toReadingDTO(Librarian librarian) {
         LibrarianReadingDTO dto = new LibrarianReadingDTO(librarian.getId(), librarian.getName(),
                 librarian.getYearsOfExperience());
