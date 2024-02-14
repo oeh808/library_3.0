@@ -11,6 +11,12 @@ public class BorrowedBookReadingDTO {
 
     }
 
+    public BorrowedBookReadingDTO(String refId, int userId, Date dateDue) {
+        this.refId = refId;
+        this.userId = userId;
+        this.dateDue = dateDue;
+    }
+
     // Getters and Setters
     // ______________________________________________________________________________
     public String getRefId() {
