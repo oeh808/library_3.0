@@ -43,7 +43,6 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getBooksByTitle(String title) {
-        title.toLowerCase();
         return bookRepo.findByTitleContaining(title);
     }
 

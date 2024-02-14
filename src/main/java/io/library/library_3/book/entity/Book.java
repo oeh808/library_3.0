@@ -27,8 +27,6 @@ public class Book {
     }
 
     public Book(String title, String[] authors, int numOfPages, int quantity, String[] categories) {
-        // FIXME: Use ignore case in SQL queries instead
-        title = title.toLowerCase();
         this.title = title;
         generateRefId(title);
         this.authors = authors;
