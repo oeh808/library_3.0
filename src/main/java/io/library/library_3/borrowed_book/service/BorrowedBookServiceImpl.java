@@ -144,9 +144,17 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
     }
 
     @Override
-    public void returnBook(int id, UserTypeCustom userType) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'returnBook'");
+    public void returnBook(int id) {
+        // Check that borrowed book exists (Exception handling in getBorrowedBook)
+        BorrowedBook borrowedBook = getBorrowedBook(id);
+
+        // Increment quantity of books in stock
+        Book book = borrowedBook.getBook();
+        book.setQuantity(book.getQuantity() + 1);
+        bookRepo.save(book);
+
+        // Finally delete borrowed book
+        borrowedBookRepo.deleteById(id);
     }
 
 }

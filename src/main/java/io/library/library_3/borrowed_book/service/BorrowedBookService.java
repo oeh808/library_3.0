@@ -10,7 +10,7 @@ import io.library.library_3.user.entity.User;
 
 public interface BorrowedBookService {
     // Create
-    public void borrowBook(String refId, int userId, Date dateDue, UserTypeCustom userType);
+    public BorrowedBook borrowBook(String refId, int userId, Date dateDue, UserTypeCustom userType);
 
     // Read
     // No need to retrieve borrowed books with BorrowedBook type
@@ -25,5 +25,5 @@ public interface BorrowedBookService {
             UserTypeCustom userType);
 
     // Delete
-    public void returnBook(int id, UserTypeCustom userType);
+    public void returnBook(int id);
 }
