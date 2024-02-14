@@ -3,6 +3,8 @@ package io.library.library_3.librarian.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.library.library_3.custom_messages.CustomMessages;
+import io.library.library_3.custom_messages.SuccessResponse;
 import io.library.library_3.librarian.dtos.LibrarianCreationDTO;
 import io.library.library_3.librarian.dtos.LibrarianMapper;
 import io.library.library_3.librarian.dtos.LibrarianReadingDTO;
@@ -61,7 +63,9 @@ public class LibrarianController {
 
     // Delete
     @DeleteMapping("/{id}")
-    public void removeLibrarian(@PathVariable int id) {
+    public SuccessResponse removeLibrarian(@PathVariable int id) {
         librarianService.deleteLibrarian(id);
+
+        return new SuccessResponse(CustomMessages.DELETE_IS_SUCCESSFUL);
     }
 }

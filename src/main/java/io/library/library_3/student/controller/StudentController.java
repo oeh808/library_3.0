@@ -2,6 +2,8 @@ package io.library.library_3.student.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import io.library.library_3.custom_messages.CustomMessages;
+import io.library.library_3.custom_messages.SuccessResponse;
 import io.library.library_3.student.dtos.StudentMapper;
 import io.library.library_3.student.dtos.StudentReadingDTO;
 import io.library.library_3.student.dtos.StudentRegisterationDTO;
@@ -83,7 +85,9 @@ public class StudentController {
 
     // Delete
     @DeleteMapping("/{id}")
-    public void removeStudent(@PathVariable int id) {
+    public SuccessResponse removeStudent(@PathVariable int id) {
         studentService.removeStudent(id);
+
+        return new SuccessResponse(CustomMessages.DELETE_IS_SUCCESSFUL);
     }
 }
