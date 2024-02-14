@@ -8,6 +8,7 @@ import io.library.library_3.librarian.dtos.LibrarianMapper;
 import io.library.library_3.librarian.dtos.LibrarianReadingDTO;
 import io.library.library_3.librarian.entity.Librarian;
 import io.library.library_3.librarian.service.LibrarianService;
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +33,7 @@ public class LibrarianController {
 
     // Create
     @PostMapping()
-    public LibrarianReadingDTO addLibrarian(@RequestBody LibrarianCreationDTO dto) {
+    public LibrarianReadingDTO addLibrarian(@Valid @RequestBody LibrarianCreationDTO dto) {
         Librarian librarian = librarianMapper.toLibrarian(dto);
 
         return librarianMapper.toReadingDTO(librarianService.addLibrarian(librarian));
@@ -51,7 +52,7 @@ public class LibrarianController {
 
     // Update
     @PutMapping("/{id}")
-    public LibrarianReadingDTO updateLibrarian(@PathVariable int id, @RequestBody LibrarianCreationDTO dto) {
+    public LibrarianReadingDTO updateLibrarian(@PathVariable int id, @Valid @RequestBody LibrarianCreationDTO dto) {
         Librarian librarian = librarianMapper.toLibrarian(dto);
         librarian.setId(id);
 
