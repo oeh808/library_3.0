@@ -3,11 +3,14 @@ package io.library.library_3.librarian.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import io.library.library_3.error_handling.exceptions.EntityNotFoundException;
 import io.library.library_3.librarian.LibrarianExceptionMessages;
 import io.library.library_3.librarian.entity.Librarian;
 import io.library.library_3.librarian.repo.LibrarianRepo;
 
+@Service
 public class LibrarianServiceImpl implements LibrarianService {
     private LibrarianRepo librarianRepo;
 

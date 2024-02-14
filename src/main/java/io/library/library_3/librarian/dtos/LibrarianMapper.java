@@ -3,8 +3,11 @@ package io.library.library_3.librarian.dtos;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import io.library.library_3.librarian.entity.Librarian;
 
+@Component
 public class LibrarianMapper {
     // To DTO
     public LibrarianReadingDTO toReadingDTO(Librarian librarian) {
