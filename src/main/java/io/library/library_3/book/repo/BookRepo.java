@@ -8,5 +8,5 @@ import io.library.library_3.book.entity.Book;
 
 public interface BookRepo extends JpaRepository<Book, String> {
 
-    public List<Book> findByTitleContaining(String title);
+    public List<Book> findByTitleContainingIgnoreCase(String title);
 }

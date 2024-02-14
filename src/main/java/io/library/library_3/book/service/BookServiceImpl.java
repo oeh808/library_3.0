@@ -43,7 +43,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> getBooksByTitle(String title) {
-        return bookRepo.findByTitleContaining(title);
+        return bookRepo.findByTitleContainingIgnoreCase(title);
     }
 
     @Override
