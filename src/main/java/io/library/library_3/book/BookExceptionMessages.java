@@ -6,7 +6,7 @@ public class BookExceptionMessages {
     }
 
     public static String BOOK_WITH_TITLE_EXISTS(String title) {
-        return ("A book with title = " + title + " already exists.");
+        return ("A book with title = (" + title + ") already exists.");
     }
 
     public static String INVALID_CATEGORY(String category) {

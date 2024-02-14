@@ -30,7 +30,7 @@ public class BookServiceImpl implements BookService {
         Optional<Book> opBook = bookRepo.findById(book.getRefId());
         if (opBook.isPresent()) {
             throw new DuplicateEntityException(
-                    BookExceptionMessages.BOOK_WITH_TITLE_EXISTS("(" + book.getTitle() + ")"));
+                    BookExceptionMessages.BOOK_WITH_TITLE_EXISTS(book.getTitle()));
         }
 
         return bookRepo.save(book);
