@@ -7,10 +7,13 @@ import java.util.Optional;
 import org.hibernate.usertype.UserType;
 import org.springframework.stereotype.Service;
 
+import io.library.library_3.book.BookExceptionMessages;
 import io.library.library_3.book.entity.Book;
 import io.library.library_3.book.repo.BookRepo;
+import io.library.library_3.borrowed_book.BorrowedBookExceptionMessages;
 import io.library.library_3.borrowed_book.entity.BorrowedBook;
 import io.library.library_3.borrowed_book.repo.BorrowedBookRepo;
+import io.library.library_3.error_handling.exceptions.EntityNotFoundException;
 import io.library.library_3.librarian.entity.Librarian;
 import io.library.library_3.librarian.repo.LibrarianRepo;
 import io.library.library_3.student.entity.Student;
@@ -45,8 +48,12 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
 
     @Override
     public List<User> getUsersBorrowingBook(String refId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUsersBorrowingBook'");
+        Optional<Book> opBook = bookRepo.findById(refId);
+        if (opBook.isPresent()) {
+            return borrowedBookRepo.findUsersBorrowingBook(opBook.get());
+        } else {
+            throw new EntityNotFoundException(BookExceptionMessages.REFID_NOT_FOUND(refId));
+        }
     }
 
     @Override
