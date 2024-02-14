@@ -18,7 +18,7 @@ public interface BorrowedBookRepo extends JpaRepository<BorrowedBook, Integer> {
             "WHERE bb.book = :book")
     public List<User> findUsersBorrowingBook(@Param("book") Book book);
 
-    @Query("SELECT bb.book FROM BorrowedBook bb" +
+    @Query("SELECT bb.book FROM BorrowedBook bb " +
             "WHERE bb.user = :user")
     public List<Book> findBooksBorrowedByUser(@Param("user") User user);
 }
