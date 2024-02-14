@@ -3,8 +3,8 @@ package io.library.library_3.book.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.library.library_3.book.dtos.BookCreationDTO;
-import io.library.library_3.book.dtos.BookMapper;
 import io.library.library_3.book.entity.Book;
+import io.library.library_3.book.mapper.BookMapper;
 import io.library.library_3.book.service.BookService;
 import io.library.library_3.custom_messages.CustomMessages;
 import io.library.library_3.custom_messages.SuccessResponse;

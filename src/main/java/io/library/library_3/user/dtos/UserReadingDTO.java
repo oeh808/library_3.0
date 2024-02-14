@@ -1,4 +1,4 @@
-package io.library.library_3.user.entity.dtos;
+package io.library.library_3.user.dtos;
 
 public class UserReadingDTO {
     private int id;

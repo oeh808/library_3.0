@@ -1,10 +1,12 @@
-package io.library.library_3.librarian.dtos;
+package io.library.library_3.librarian.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import io.library.library_3.librarian.dtos.LibrarianCreationDTO;
+import io.library.library_3.librarian.dtos.LibrarianReadingDTO;
 import io.library.library_3.librarian.entity.Librarian;
 
 @Component

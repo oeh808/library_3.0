@@ -1,8 +1,10 @@
-package io.library.library_3.borrowed_book.dtos;
+package io.library.library_3.borrowed_book.mapper;
 
 import org.springframework.stereotype.Component;
 
 import io.library.library_3.book.entity.Book;
+import io.library.library_3.borrowed_book.dtos.BorrowedBookCreationDTO;
+import io.library.library_3.borrowed_book.dtos.BorrowedBookReadingDTO;
 import io.library.library_3.borrowed_book.entity.BorrowedBook;
 import io.library.library_3.user.entity.User;
 

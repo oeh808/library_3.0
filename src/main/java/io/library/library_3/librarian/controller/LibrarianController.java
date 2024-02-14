@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RestController;
 import io.library.library_3.custom_messages.CustomMessages;
 import io.library.library_3.custom_messages.SuccessResponse;
 import io.library.library_3.librarian.dtos.LibrarianCreationDTO;
-import io.library.library_3.librarian.dtos.LibrarianMapper;
 import io.library.library_3.librarian.dtos.LibrarianReadingDTO;
 import io.library.library_3.librarian.entity.Librarian;
+import io.library.library_3.librarian.mapper.LibrarianMapper;
 import io.library.library_3.librarian.service.LibrarianService;
 import jakarta.validation.Valid;
 

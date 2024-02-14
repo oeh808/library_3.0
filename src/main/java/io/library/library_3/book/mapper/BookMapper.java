@@ -1,8 +1,9 @@
-package io.library.library_3.book.dtos;
+package io.library.library_3.book.mapper;
 
 import org.springframework.stereotype.Component;
 
 import io.library.library_3.book.BookExceptionMessages;
+import io.library.library_3.book.dtos.BookCreationDTO;
 import io.library.library_3.book.entity.Book;
 import io.library.library_3.enums.Category;
 import io.library.library_3.error_handling.exceptions.InvalidEnumException;

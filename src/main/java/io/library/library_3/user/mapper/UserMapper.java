@@ -1,10 +1,11 @@
-package io.library.library_3.user.entity.dtos;
+package io.library.library_3.user.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import io.library.library_3.user.dtos.UserReadingDTO;
 import io.library.library_3.user.entity.User;
 
 @Component

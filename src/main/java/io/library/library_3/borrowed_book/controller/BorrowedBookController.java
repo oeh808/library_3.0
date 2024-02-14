@@ -4,15 +4,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.library.library_3.book.entity.Book;
 import io.library.library_3.borrowed_book.dtos.BorrowedBookCreationDTO;
-import io.library.library_3.borrowed_book.dtos.BorrowedBookMapper;
 import io.library.library_3.borrowed_book.dtos.BorrowedBookReadingDTO;
 import io.library.library_3.borrowed_book.entity.BorrowedBook;
+import io.library.library_3.borrowed_book.mapper.BorrowedBookMapper;
 import io.library.library_3.borrowed_book.service.BorrowedBookService;
 import io.library.library_3.custom_messages.CustomMessages;
 import io.library.library_3.custom_messages.SuccessResponse;
 import io.library.library_3.enums.UserTypeCustom;
-import io.library.library_3.user.entity.dtos.UserMapper;
-import io.library.library_3.user.entity.dtos.UserReadingDTO;
+import io.library.library_3.user.dtos.UserReadingDTO;
+import io.library.library_3.user.mapper.UserMapper;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;

@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.library.library_3.custom_messages.CustomMessages;
 import io.library.library_3.custom_messages.SuccessResponse;
-import io.library.library_3.student.dtos.StudentMapper;
 import io.library.library_3.student.dtos.StudentReadingDTO;
 import io.library.library_3.student.dtos.StudentRegisterationDTO;
 import io.library.library_3.student.entity.Student;
+import io.library.library_3.student.mapper.StudentMapper;
 import io.library.library_3.student.service.StudentService;
 import jakarta.validation.Valid;
 

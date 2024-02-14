@@ -1,10 +1,12 @@
-package io.library.library_3.student.dtos;
+package io.library.library_3.student.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import io.library.library_3.student.dtos.StudentReadingDTO;
+import io.library.library_3.student.dtos.StudentRegisterationDTO;
 import io.library.library_3.student.entity.Student;
 
 @Component
