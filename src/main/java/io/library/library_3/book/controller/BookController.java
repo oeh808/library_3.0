@@ -8,7 +8,6 @@ import io.library.library_3.book.entity.Book;
 import io.library.library_3.book.service.BookService;
 import io.library.library_3.book.service.BookServiceImpl;
 import io.library.library_3.enums.BookSearchType;
-import io.library.library_3.enums.Category;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PutMapping;
@@ -56,8 +55,9 @@ public class BookController {
     }
 
     @GetMapping("/byCategories")
-    public List<Book> getBooksByCategories(@RequestBody Category[] categories) {
-        return bookService.getBooks(bookMapper.fromCategories(categories), BookSearchType.CATEGORIES);
+    public List<Book> getBooksByCategories(@RequestBody String[] categories) {
+        bookMapper.toCategories(categories); // Will throw error if categories cannot be converted
+        return bookService.getBooks(categories, BookSearchType.CATEGORIES);
     }
 
     @GetMapping("/{refId}")

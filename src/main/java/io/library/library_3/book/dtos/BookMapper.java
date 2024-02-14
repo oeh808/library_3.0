@@ -2,8 +2,10 @@ package io.library.library_3.book.dtos;
 
 import org.springframework.stereotype.Component;
 
+import io.library.library_3.book.BookExceptionMessages;
 import io.library.library_3.book.entity.Book;
 import io.library.library_3.enums.Category;
+import io.library.library_3.error_handling.exceptions.InvalidEnumException;
 
 @Component
 public class BookMapper {
@@ -41,8 +43,14 @@ public class BookMapper {
     public Category[] toCategories(String[] categs) {
         Category[] categories = new Category[categs.length];
         for (int i = 0; i < categs.length; i++) {
-            categories[i] = Category.valueOf(categs[i]);
+            try {
+                categories[i] = Category.valueOf(categs[i].toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new InvalidEnumException(BookExceptionMessages.INVALID_CATEGORY(categs[i].toUpperCase()));
+            }
+
         }
+
         return categories;
     }
 }
