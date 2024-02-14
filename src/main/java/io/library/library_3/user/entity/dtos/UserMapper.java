@@ -3,8 +3,11 @@ package io.library.library_3.user.entity.dtos;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import io.library.library_3.user.entity.User;
 
+@Component
 public class UserMapper {
     // To DTO
     public UserReadingDTO toDTO(User user) {
