@@ -3,6 +3,7 @@ package io.library.library_3.student.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.library.library_3.student.dtos.StudentMapper;
+import io.library.library_3.student.dtos.StudentReadingDTO;
 import io.library.library_3.student.dtos.StudentRegisterationDTO;
 import io.library.library_3.student.entity.Student;
 import io.library.library_3.student.service.StudentService;
@@ -32,52 +33,52 @@ public class StudentController {
 
     // Create
     @PostMapping()
-    public Student signUpStudent(@Valid @RequestBody StudentRegisterationDTO dto) {
-        return studentService.signUpStudent(studentMapper.toStudent(dto));
+    public StudentReadingDTO signUpStudent(@Valid @RequestBody StudentRegisterationDTO dto) {
+        return studentMapper.toReadingDTO(studentService.signUpStudent(studentMapper.toStudent(dto)));
     }
 
     // Read
     @GetMapping()
-    public List<Student> getStudents() {
-        return studentService.getStudents();
+    public List<StudentReadingDTO> getStudents() {
+        return studentMapper.toReadingDTO(studentService.getStudents());
     }
 
     @GetMapping("/byName")
-    public List<Student> getStudentsByName(@RequestBody String name) {
-        return studentService.getStudentsByName(name);
+    public List<StudentReadingDTO> getStudentsByName(@RequestBody String name) {
+        return studentMapper.toReadingDTO(studentService.getStudentsByName(name));
     }
 
     @GetMapping("/byAddress")
-    public List<Student> getStudentsByAdress(@RequestBody String address) {
-        return studentService.getStudentsByAdress(address);
+    public List<StudentReadingDTO> getStudentsByAdress(@RequestBody String address) {
+        return studentMapper.toReadingDTO(studentService.getStudentsByAdress(address));
     }
 
     @GetMapping("/byCollege")
-    public List<Student> getStudentsByCollege(@RequestBody String college) {
-        return studentService.getStudentsByCollege(college);
+    public List<StudentReadingDTO> getStudentsByCollege(@RequestBody String college) {
+        return studentMapper.toReadingDTO(studentService.getStudentsByCollege(college));
     }
 
     @GetMapping("/registered")
-    public List<Student> getRegisteredStudents() {
-        return studentService.getRegisteredStudents();
+    public List<StudentReadingDTO> getRegisteredStudents() {
+        return studentMapper.toReadingDTO(studentService.getRegisteredStudents());
     }
 
     @GetMapping("/{id}")
-    public Student getStudent(@PathVariable int id) {
-        return studentService.getStudent(id);
+    public StudentReadingDTO getStudent(@PathVariable int id) {
+        return studentMapper.toReadingDTO(studentService.getStudent(id));
     }
 
     // Update
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable int id, @Valid @RequestBody StudentRegisterationDTO dto) {
+    public StudentReadingDTO updateStudent(@PathVariable int id, @Valid @RequestBody StudentRegisterationDTO dto) {
         Student student = studentMapper.toStudent(dto);
         student.setId(id);
-        return studentService.updateStudent(student);
+        return studentMapper.toReadingDTO(studentService.updateStudent(student));
     }
 
     @PutMapping("/approve/{id}")
-    public Student approveStudent(@PathVariable int id) {
-        return studentService.approveStudent(id);
+    public StudentReadingDTO approveStudent(@PathVariable int id) {
+        return studentMapper.toReadingDTO(studentService.approveStudent(id));
     }
 
     // Delete
