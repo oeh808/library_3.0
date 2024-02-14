@@ -6,7 +6,6 @@ import io.library.library_3.book.dtos.BookCreationDTO;
 import io.library.library_3.book.dtos.BookMapper;
 import io.library.library_3.book.entity.Book;
 import io.library.library_3.book.service.BookService;
-import io.library.library_3.book.service.BookServiceImpl;
 import io.library.library_3.enums.BookSearchType;
 import jakarta.validation.Valid;
 
@@ -27,8 +26,8 @@ public class BookController {
     private BookService bookService;
     private BookMapper bookMapper;
 
-    public BookController(BookServiceImpl bookServiceImpl, BookMapper bookMapper) {
-        this.bookService = bookServiceImpl;
+    public BookController(BookService bookService, BookMapper bookMapper) {
+        this.bookService = bookService;
         this.bookMapper = bookMapper;
     }
 
