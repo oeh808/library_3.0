@@ -158,6 +158,16 @@ public class LibrarianControllerTest {
     }
 
     @Test
+    public void updateFollower_Invalid() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/librarians/" + (librarian.getId()))
+                        .content(mapper.writeValueAsString(invalidCreationDTO))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().json("{}"));
+    }
+
+    @Test
     public void updateFollower_NonExistant() throws Exception {
         librarian.setId(librarian.getId() - 1);
         doAnswer((i) -> {
