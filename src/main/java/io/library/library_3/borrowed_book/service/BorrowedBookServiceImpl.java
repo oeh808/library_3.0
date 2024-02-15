@@ -134,20 +134,10 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
     }
 
     @Override
-    public BorrowedBook updateBorrowedBookDate(BorrowedBook borrowedBook,
-            UserTypeCustom userType) {
+    public BorrowedBook updateBorrowedBookDate(BorrowedBook borrowedBook) {
         BorrowedBook bb = getBorrowedBook(borrowedBook.getId());
         borrowedBook.setBook(bb.getBook());
         borrowedBook.setUser(bb.getUser());
-
-        User user = borrowedBook.getUser();
-        if (userType.equals(UserTypeCustom.STUDENT)) {
-            if (studentRepo.findById(user.getId()).isEmpty())
-                throw new EntityNotFoundException(StudentExceptionMessages.ID_NOT_FOUND(user.getId()));
-        } else {
-            if (librarianRepo.findById(user.getId()).isEmpty())
-                throw new EntityNotFoundException(LibrarianExceptionMessages.ID_NOT_FOUND(user.getId()));
-        }
 
         return borrowedBookRepo.save(borrowedBook);
     }
