@@ -17,6 +17,7 @@ import io.library.library_3.student.repo.StudentRepo;
 
 @ExtendWith(SpringExtension.class)
 public class BorrowedBookServiceTest {
+    // TODO: Complete unit test
 
     @TestConfiguration
     static class BorrowedBookServiceTestConfig {
