@@ -70,6 +70,6 @@ public class BookRepoTest {
     public void findByTitle_NoMatch() {
         List<Book> res = bookRepo.findByTitleContainingIgnoreCase("Blah");
 
-        assertTrue(res.size() == 0);
+        assertTrue(res.isEmpty());
     }
 }
