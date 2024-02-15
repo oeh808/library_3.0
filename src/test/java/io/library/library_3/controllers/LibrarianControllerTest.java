@@ -71,7 +71,6 @@ public class LibrarianControllerTest {
         librarian.setId(100);
         when(librarianMapper.toLibrarian(any(LibrarianCreationDTO.class))).thenReturn(librarian);
         when(librarianMapper.toReadingDTO(librarian)).thenReturn(readingDTO);
-        when(librarianMapper.toReadingDTO(librarian)).thenReturn(readingDTO);
     }
 
     @Test
