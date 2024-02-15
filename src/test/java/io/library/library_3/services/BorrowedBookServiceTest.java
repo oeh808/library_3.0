@@ -41,6 +41,9 @@ public class BorrowedBookServiceTest {
     @MockBean
     private BookRepo bookRepo;
 
+    @Autowired
+    private BorrowedBookService borrowedBookService;
+
     @BeforeAll
     public static void setUp() {
 
