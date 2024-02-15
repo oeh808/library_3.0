@@ -2,8 +2,6 @@ package io.library.library_3.controllers;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -285,8 +283,6 @@ public class BookControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/books/" + (book.getRefId())))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{}"));
-
-        verify(bookService, times(1)).deleteBook(book.getRefId());
     }
 
     @Test

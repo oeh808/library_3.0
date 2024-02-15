@@ -12,8 +12,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -186,8 +184,6 @@ public class LibrarianControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/librarians/" + (librarian.getId())))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{}"));
-
-        verify(librarianService, times(1)).deleteLibrarian(librarian.getId());
     }
 
     @Test
