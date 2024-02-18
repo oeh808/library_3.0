@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -29,6 +30,7 @@ import io.library.library_3.librarian.entity.Librarian;
 import io.library.library_3.librarian.mapper.LibrarianMapper;
 import io.library.library_3.librarian.service.LibrarianService;
 
+@ActiveProfiles("test")
 @WebMvcTest(LibrarianController.class)
 public class LibrarianControllerTest {
     @Autowired
