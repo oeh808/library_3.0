@@ -10,6 +10,8 @@ import io.library.library_3.student.entity.Student;
 import io.library.library_3.student.mapper.StudentMapper;
 import io.library.library_3.student.service.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -39,57 +41,74 @@ public class StudentController {
     // Create
     @Operation(description = "POST endpoint for signing up a student.", summary = "Sign up a student")
     @PostMapping()
-    public StudentReadingDTO signUpStudent(@Valid @RequestBody StudentRegisterationDTO dto) {
+    public StudentReadingDTO signUpStudent(
+            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of StudentRegisterationDTO") @RequestBody StudentRegisterationDTO dto) {
         return studentMapper.toReadingDTO(studentService.signUpStudent(studentMapper.toStudent(dto)));
     }
 
     // Read
+    @Operation(description = "GET endpoint for retrieving a list of students.", summary = "Get all students")
     @GetMapping()
     public List<StudentReadingDTO> getStudents() {
         return studentMapper.toReadingDTO(studentService.getStudents());
     }
 
+    @Operation(description = "GET endpoint for retrieving a list of students with the same name.", summary = "Get all students by name")
     @GetMapping("/byName")
-    public List<StudentReadingDTO> getStudentsByName(@RequestBody String name) {
+    public List<StudentReadingDTO> getStudentsByName(@Parameter(name = "Student Name") @RequestBody String name) {
         return studentMapper.toReadingDTO(studentService.getStudentsByName(name));
     }
 
+    @Operation(description = "GET endpoint for retrieving a list of students with the same address.", summary = "Get all students by address")
     @GetMapping("/byAddress")
-    public List<StudentReadingDTO> getStudentsByAdress(@RequestBody String address) {
+    public List<StudentReadingDTO> getStudentsByAdress(
+            @Parameter(name = "Student Address") @RequestBody String address) {
         return studentMapper.toReadingDTO(studentService.getStudentsByAdress(address));
     }
 
+    @Operation(description = "GET endpoint for retrieving a list of students with the same college.", summary = "Get all students by college")
     @GetMapping("/byCollege")
-    public List<StudentReadingDTO> getStudentsByCollege(@RequestBody String college) {
+    public List<StudentReadingDTO> getStudentsByCollege(
+            @Parameter(name = "Student College") @RequestBody String college) {
         return studentMapper.toReadingDTO(studentService.getStudentsByCollege(college));
     }
 
+    @Operation(description = "GET endpoint for retrieving a list of registered students.", summary = "Get all registered students")
     @GetMapping("/registered")
     public List<StudentReadingDTO> getRegisteredStudents() {
         return studentMapper.toReadingDTO(studentService.getRegisteredStudents());
     }
 
+    @Operation(description = "GET endpoint for retrieving a single student by their id.", summary = "Get student by id")
     @GetMapping("/{id}")
-    public StudentReadingDTO getStudent(@PathVariable int id) {
+    public StudentReadingDTO getStudent(
+            @Parameter(in = ParameterIn.PATH, name = "id", description = "Student ID") @PathVariable int id) {
         return studentMapper.toReadingDTO(studentService.getStudent(id));
     }
 
     // Update
+    @Operation(description = "PUT endpoint for updating a single student by their id.", summary = "Update student")
     @PutMapping("/{id}")
-    public StudentReadingDTO updateStudent(@PathVariable int id, @Valid @RequestBody StudentRegisterationDTO dto) {
+    public StudentReadingDTO updateStudent(
+            @Parameter(in = ParameterIn.PATH, name = "id", description = "Student ID") @PathVariable int id,
+            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of StudentRegisterationDTO") @RequestBody StudentRegisterationDTO dto) {
         Student student = studentMapper.toStudent(dto);
         student.setId(id);
         return studentMapper.toReadingDTO(studentService.updateStudent(student));
     }
 
+    @Operation(description = "PUT endpoint for approving a student and setting them as registered.", summary = "Approve student")
     @PutMapping("/approve/{id}")
-    public StudentReadingDTO approveStudent(@PathVariable int id) {
+    public StudentReadingDTO approveStudent(
+            @Parameter(in = ParameterIn.PATH, name = "id", description = "Student ID") @PathVariable int id) {
         return studentMapper.toReadingDTO(studentService.approveStudent(id));
     }
 
     // Delete
+    @Operation(description = "DELETE endpoint for deleting a student by their id.", summary = "Delete student")
     @DeleteMapping("/{id}")
-    public SuccessResponse removeStudent(@PathVariable int id) {
+    public SuccessResponse removeStudent(
+            @Parameter(in = ParameterIn.PATH, name = "id", description = "Student ID") @PathVariable int id) {
         studentService.removeStudent(id);
 
         return new SuccessResponse(CustomMessages.DELETE_IS_SUCCESSFUL);
