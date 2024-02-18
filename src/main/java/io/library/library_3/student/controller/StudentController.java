@@ -9,6 +9,8 @@ import io.library.library_3.student.dtos.StudentRegisterationDTO;
 import io.library.library_3.student.entity.Student;
 import io.library.library_3.student.mapper.StudentMapper;
 import io.library.library_3.student.service.StudentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("students")
+@Tag(name = "Students")
 public class StudentController {
     private StudentService studentService;
     private StudentMapper studentMapper;
@@ -34,6 +37,7 @@ public class StudentController {
     }
 
     // Create
+    @Operation(description = "POST endpoint for signing up a student.", summary = "Sign up a student")
     @PostMapping()
     public StudentReadingDTO signUpStudent(@Valid @RequestBody StudentRegisterationDTO dto) {
         return studentMapper.toReadingDTO(studentService.signUpStudent(studentMapper.toStudent(dto)));

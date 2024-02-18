@@ -9,6 +9,7 @@ import io.library.library_3.book.service.BookService;
 import io.library.library_3.custom_messages.CustomMessages;
 import io.library.library_3.custom_messages.SuccessResponse;
 import io.library.library_3.enums.BookSearchType;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @RestController
 @RequestMapping("books")
+@Tag(name = "Books")
 public class BookController {
     private BookService bookService;
     private BookMapper bookMapper;

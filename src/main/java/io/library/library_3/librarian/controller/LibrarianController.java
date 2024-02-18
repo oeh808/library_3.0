@@ -10,6 +10,7 @@ import io.library.library_3.librarian.dtos.LibrarianReadingDTO;
 import io.library.library_3.librarian.entity.Librarian;
 import io.library.library_3.librarian.mapper.LibrarianMapper;
 import io.library.library_3.librarian.service.LibrarianService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("librarians")
+@Tag(name = "Librarians")
 public class LibrarianController {
     private LibrarianService librarianService;
     private LibrarianMapper librarianMapper;

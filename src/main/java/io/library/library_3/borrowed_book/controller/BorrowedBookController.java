@@ -13,6 +13,7 @@ import io.library.library_3.custom_messages.SuccessResponse;
 import io.library.library_3.enums.UserTypeCustom;
 import io.library.library_3.user.dtos.UserReadingDTO;
 import io.library.library_3.user.mapper.UserMapper;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("borrowing")
+@Tag(name = "Borrowing")
 public class BorrowedBookController {
     private BorrowedBookService borrowedBookService;
     private BorrowedBookMapper borrowedBookMapper;
