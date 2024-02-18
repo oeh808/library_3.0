@@ -10,6 +10,9 @@ import io.library.library_3.librarian.dtos.LibrarianReadingDTO;
 import io.library.library_3.librarian.entity.Librarian;
 import io.library.library_3.librarian.mapper.LibrarianMapper;
 import io.library.library_3.librarian.service.LibrarianService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -36,27 +39,34 @@ public class LibrarianController {
     }
 
     // Create
+    @Operation(description = "POST endpoint for adding a librarian.", summary = "Add a librarian")
     @PostMapping()
-    public LibrarianReadingDTO addLibrarian(@Valid @RequestBody LibrarianCreationDTO dto) {
+    public LibrarianReadingDTO addLibrarian(
+            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of LibrarianCreationDTO") @RequestBody LibrarianCreationDTO dto) {
         Librarian librarian = librarianMapper.toLibrarian(dto);
 
         return librarianMapper.toReadingDTO(librarianService.addLibrarian(librarian));
     }
 
     // Read
+    @Operation(description = "GET endpoint for retrieving a list of librarians.", summary = "Get all librarians")
     @GetMapping()
     public List<LibrarianReadingDTO> getLibrarians() {
         return librarianMapper.toReadingDTO(librarianService.getLibrarians());
     }
 
+    @Operation(description = "GET endpoint for retrieving a single librarian by their id.", summary = "Get librarian by id")
     @GetMapping("/{id}")
-    public LibrarianReadingDTO getLibrarian(@PathVariable int id) {
+    public LibrarianReadingDTO getLibrarian(
+            @Parameter(in = ParameterIn.PATH, name = "id", description = "Librarian ID") @PathVariable int id) {
         return librarianMapper.toReadingDTO(librarianService.getLibrarian(id));
     }
 
     // Update
+    @Operation(description = "PUT endpoint for updating a single librarian by their id.", summary = "Update librarian")
     @PutMapping("/{id}")
-    public LibrarianReadingDTO updateLibrarian(@PathVariable int id, @Valid @RequestBody LibrarianCreationDTO dto) {
+    public LibrarianReadingDTO updateLibrarian(@PathVariable int id,
+            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of LibrarianCreationDTO") @RequestBody LibrarianCreationDTO dto) {
         Librarian librarian = librarianMapper.toLibrarian(dto);
         librarian.setId(id);
 
@@ -64,8 +74,10 @@ public class LibrarianController {
     }
 
     // Delete
+    @Operation(description = "DELETE endpoint for deleting a librarian by their id.", summary = "Delete librarian")
     @DeleteMapping("/{id}")
-    public SuccessResponse removeLibrarian(@PathVariable int id) {
+    public SuccessResponse removeLibrarian(
+            @Parameter(in = ParameterIn.PATH, name = "id", description = "Librarian ID") @PathVariable int id) {
         librarianService.deleteLibrarian(id);
 
         return new SuccessResponse(CustomMessages.DELETE_IS_SUCCESSFUL);

@@ -1,12 +1,15 @@
 package io.library.library_3.librarian.dtos;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 
 public class LibrarianCreationDTO {
     @NotBlank(message = "A librarian must have a name.")
+    @Schema(requiredProperties = { "Name cannot be null", "Name cannot be empty" })
     private String name;
     @PositiveOrZero(message = "A librarian cannot have less than 0 years of experience.")
+    @Schema(minimum = "0")
     private int yearsOfExperience = 0;
 
     public LibrarianCreationDTO() {
