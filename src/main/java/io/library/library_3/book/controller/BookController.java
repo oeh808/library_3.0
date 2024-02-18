@@ -75,14 +75,14 @@ public class BookController {
     }
 
     @GetMapping("/{refId}")
-    @Operation(description = "GET endpoint for retrieving a single book by their reference id (refId).", summary = "Get book by refId")
+    @Operation(description = "GET endpoint for retrieving a single book by its reference id (refId).", summary = "Get book by refId")
     public Book getBook(
             @Parameter(in = ParameterIn.PATH, name = "refId", description = "Reference ID") @PathVariable String refId) {
         return bookService.getBook(refId);
     }
 
     // Update
-    @Operation(description = "PUT endpoint for updating a single book by their reference id.", summary = "Update book")
+    @Operation(description = "PUT endpoint for updating a single book by its reference id.", summary = "Update book")
     @PutMapping("/{refId}")
     public Book updateBook(
             @Parameter(in = ParameterIn.PATH, name = "refId", description = "Reference ID") @PathVariable String refId,
@@ -94,7 +94,7 @@ public class BookController {
     }
 
     // Delete
-    @Operation(description = "DELETE endpoint for deleting a book by their reference id.", summary = "Delete book")
+    @Operation(description = "DELETE endpoint for deleting a book by its reference id.", summary = "Delete book")
     @DeleteMapping("/{refId}")
     public SuccessResponse deleteBook(
             @Parameter(in = ParameterIn.PATH, name = "refId", description = "Reference ID") @PathVariable String refId) {
