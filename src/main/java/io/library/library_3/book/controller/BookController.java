@@ -9,6 +9,9 @@ import io.library.library_3.book.service.BookService;
 import io.library.library_3.custom_messages.CustomMessages;
 import io.library.library_3.custom_messages.SuccessResponse;
 import io.library.library_3.enums.BookSearchType;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -36,41 +39,54 @@ public class BookController {
     }
 
     // Create
+    @Operation(description = "POST endpoint for creating a book.", summary = "Create a book")
     @PostMapping()
-    public Book addBook(@Valid @RequestBody BookCreationDTO dto) {
+    public Book addBook(
+            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of BookCreationDTO") @RequestBody BookCreationDTO dto) {
         return bookService.createBook(bookMapper.toBook(dto));
     }
 
     // Read
+    @Operation(description = "GET endpoint for retrieving a list of books.", summary = "Get all books")
     @GetMapping()
     public List<Book> getBooks() {
         return bookService.getBooks();
     }
 
+    @Operation(description = "GET endpoint for retrieving a list of books INCLUDING a regex.", summary = "Get all books by title regex")
     @GetMapping("/byTitle/{title}")
-    public List<Book> getBooksByTitle(@PathVariable String title) {
+    public List<Book> getBooksByTitle(
+            @Parameter(in = ParameterIn.PATH, name = "id", description = "Title Regex") @PathVariable String title) {
         return bookService.getBooksByTitle(title);
     }
 
+    @Operation(description = "GET endpoint for retrieving a list of books INCLUDING a list of authors.", summary = "Get all books by authors")
     @GetMapping("/byAuthors")
-    public List<Book> getBooksByAuthors(@RequestBody String[] authors) {
+    public List<Book> getBooksByAuthors(@Parameter(name = "Authors") @RequestBody String[] authors) {
         return bookService.getBooks(authors, BookSearchType.AUTHORS);
     }
 
+    @Operation(description = "GET endpoint for retrieving a list of books INCLUDING a list of categories.", summary = "Get all books by categories")
     @GetMapping("/byCategories")
-    public List<Book> getBooksByCategories(@RequestBody String[] categories) {
+    public List<Book> getBooksByCategories(
+            @Parameter(name = "Categories", description = "Must be comprised of valid categories (See BookCreationDTO)") @RequestBody String[] categories) {
         bookMapper.toCategories(categories); // Will throw error if categories cannot be converted
         return bookService.getBooks(categories, BookSearchType.CATEGORIES);
     }
 
     @GetMapping("/{refId}")
-    public Book getBook(@PathVariable String refId) {
+    @Operation(description = "GET endpoint for retrieving a single book by their reference id (refId).", summary = "Get book by refId")
+    public Book getBook(
+            @Parameter(in = ParameterIn.PATH, name = "refId", description = "Reference ID") @PathVariable String refId) {
         return bookService.getBook(refId);
     }
 
     // Update
+    @Operation(description = "PUT endpoint for updating a single book by their reference id.", summary = "Update book")
     @PutMapping("/{refId}")
-    public Book updateBook(@PathVariable String refId, @Valid @RequestBody BookCreationDTO dto) {
+    public Book updateBook(
+            @Parameter(in = ParameterIn.PATH, name = "refId", description = "Reference ID") @PathVariable String refId,
+            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of BookCreationDTO") @RequestBody BookCreationDTO dto) {
         Book book = bookMapper.toBook(dto);
         book.setRefId(refId);
 
@@ -78,8 +94,10 @@ public class BookController {
     }
 
     // Delete
+    @Operation(description = "DELETE endpoint for deleting a book by their reference id.", summary = "Delete book")
     @DeleteMapping("/{refId}")
-    public SuccessResponse deleteBook(@PathVariable String refId) {
+    public SuccessResponse deleteBook(
+            @Parameter(in = ParameterIn.PATH, name = "refId", description = "Reference ID") @PathVariable String refId) {
         bookService.deleteBook(refId);
 
         return new SuccessResponse(CustomMessages.DELETE_IS_SUCCESSFUL);
