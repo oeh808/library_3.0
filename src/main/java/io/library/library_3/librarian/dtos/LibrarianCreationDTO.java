@@ -6,7 +6,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 
 public class LibrarianCreationDTO {
     @NotBlank(message = "A librarian must have a name.")
-    @Schema(requiredProperties = { "Name cannot be null", "Name cannot be empty" })
+    @Schema(requiredProperties = { "Cannot be null", "Cannot be empty" })
     private String name;
     @PositiveOrZero(message = "A librarian cannot have less than 0 years of experience.")
     @Schema(minimum = "0")
