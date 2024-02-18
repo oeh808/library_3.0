@@ -77,24 +77,13 @@ public class BorrowedBookController {
     }
 
     // Update
-    @PutMapping("/students/{id}")
-    public BorrowedBookReadingDTO updateStudentBorrowedBookDate(@PathVariable int id,
+    @PutMapping("/{id}")
+    public BorrowedBookReadingDTO updateBorrowedBookDate(@PathVariable int id,
             @Valid @RequestBody BorrowedBookCreationDTO dto) {
         BorrowedBook borrowedBook = borrowedBookMapper.toBorrowedBook(dto);
         borrowedBook.setId(id);
 
-        return borrowedBookMapper
-                .toDTO(borrowedBookService.updateBorrowedBookDate(borrowedBook, UserTypeCustom.STUDENT));
-    }
-
-    @PutMapping("/librarians/{id}")
-    public BorrowedBookReadingDTO updateLibrarianBorrowedBookDate(@PathVariable int id,
-            @Valid @RequestBody BorrowedBookCreationDTO dto) {
-        BorrowedBook borrowedBook = borrowedBookMapper.toBorrowedBook(dto);
-        borrowedBook.setId(id);
-
-        return borrowedBookMapper
-                .toDTO(borrowedBookService.updateBorrowedBookDate(borrowedBook, UserTypeCustom.LIBRARIAN));
+        return borrowedBookMapper.toDTO(borrowedBookService.updateBorrowedBookDate(borrowedBook));
     }
 
     // Delete
