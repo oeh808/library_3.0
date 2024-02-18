@@ -13,6 +13,9 @@ import io.library.library_3.custom_messages.SuccessResponse;
 import io.library.library_3.enums.UserTypeCustom;
 import io.library.library_3.user.dtos.UserReadingDTO;
 import io.library.library_3.user.mapper.UserMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -43,45 +46,65 @@ public class BorrowedBookController {
     }
 
     // Create
+    @Operation(description = "POST endpoint for borrowing a book by a student.", summary = "Borrow a book (Student)")
     @PostMapping("/students/{userId}/{refId}")
-    public BorrowedBookReadingDTO borrowBookStudent(@PathVariable int userId, @PathVariable String refId,
-            @Valid @RequestBody BorrowedBookCreationDTO dto) {
+    public BorrowedBookReadingDTO borrowBookStudent(
+            @Parameter(in = ParameterIn.PATH, name = "userId", description = "Student ID") @PathVariable int userId,
+            @Parameter(in = ParameterIn.PATH, name = "refId", description = "Book Reference ID") @PathVariable String refId,
+            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of BorrowedBookCreationDTO") @RequestBody BorrowedBookCreationDTO dto) {
         return borrowedBookMapper
                 .toDTO(borrowedBookService.borrowBook(refId, userId, dto.getDateDue(), UserTypeCustom.STUDENT));
     }
 
+    @Operation(description = "POST endpoint for borrowing a book by a librarian.", summary = "Borrow a book (Librarian)")
     @PostMapping("/librarians/{userId}/{refId}")
-    public BorrowedBookReadingDTO borrowBookLibrarian(@PathVariable int userId, @PathVariable String refId,
-            @Valid @RequestBody BorrowedBookCreationDTO dto) {
+    public BorrowedBookReadingDTO borrowBookLibrarian(
+            @Parameter(in = ParameterIn.PATH, name = "userId", description = "Librarian ID") @PathVariable int userId,
+            @Parameter(in = ParameterIn.PATH, name = "refId", description = "Book Reference ID") @PathVariable String refId,
+            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of BorrowedBookCreationDTO") @RequestBody BorrowedBookCreationDTO dto) {
         return borrowedBookMapper
                 .toDTO(borrowedBookService.borrowBook(refId, userId, dto.getDateDue(), UserTypeCustom.LIBRARIAN));
     }
 
     // Read
+    @Operation(description = "GET endpoint for retrieving a list of books." +
+            "\n\n The books being retrieved will be in the form of Book, not BorrowedBookReadingDTO.", summary = "Get all borrowed books")
     @GetMapping()
     public List<Book> getBooksBorrowed() {
         return borrowedBookService.getBooksBorrowed();
     }
 
+    @Operation(description = "GET endpoint for retrieving a list of users borrowing a book, identified by its reference id.", summary = "Get all users borrowing a book")
     @GetMapping("/books/{refId}")
-    public List<UserReadingDTO> getUsersBorrowingBook(@PathVariable String refId) {
+    public List<UserReadingDTO> getUsersBorrowingBook(
+            @Parameter(in = ParameterIn.PATH, name = "refId", description = "Book Reference ID") @PathVariable String refId) {
         return userMapper.toDTO(borrowedBookService.getUsersBorrowingBook(refId));
     }
 
+    @Operation(description = "GET endpoint for retrieving a list of books borrowed by a student, identified by their user id"
+            +
+            "\n\n The books being retrieved will be in the form of Book, not BorrowedBookReadingDTO.", summary = "Get all books borrowed by user (Student)")
     @GetMapping("/students/{userId}")
-    public List<Book> getBooksBorrowedByStudent(@PathVariable int userId) {
+    public List<Book> getBooksBorrowedByStudent(
+            @Parameter(in = ParameterIn.PATH, name = "userId", description = "Student ID") @PathVariable int userId) {
         return borrowedBookService.getBooksBorrowedByUser(userId, UserTypeCustom.STUDENT);
     }
 
+    @Operation(description = "GET endpoint for retrieving a list of books borrowed by a librarian, identified by their user id"
+            +
+            "\n\n The books being retrieved will be in the form of Book, not BorrowedBookReadingDTO.", summary = "Get all books borrowed by user (Librarian)")
     @GetMapping("/librarians/{userId}")
-    public List<Book> getBooksBorrowedByLibrarian(@PathVariable int userId) {
+    public List<Book> getBooksBorrowedByLibrarian(
+            @Parameter(in = ParameterIn.PATH, name = "userId", description = "Librarian ID") @PathVariable int userId) {
         return borrowedBookService.getBooksBorrowedByUser(userId, UserTypeCustom.LIBRARIAN);
     }
 
     // Update
+    @Operation(description = "PUT endpoint for updating a single borrowed book's due date, indentified by its id.", summary = "Update Due Date")
     @PutMapping("/{id}")
-    public BorrowedBookReadingDTO updateBorrowedBookDate(@PathVariable int id,
-            @Valid @RequestBody BorrowedBookCreationDTO dto) {
+    public BorrowedBookReadingDTO updateBorrowedBookDate(
+            @Parameter(in = ParameterIn.PATH, name = "id", description = "BorrowedBook ID") @PathVariable int id,
+            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of BorrowedBookCreationDTO") @RequestBody BorrowedBookCreationDTO dto) {
         BorrowedBook borrowedBook = borrowedBookMapper.toBorrowedBook(dto);
         borrowedBook.setId(id);
 
@@ -89,8 +112,10 @@ public class BorrowedBookController {
     }
 
     // Delete
+    @Operation(description = "DELETE endpoint for returning a borrowed book, identified by its id.", summary = "Return book")
     @DeleteMapping("/{id}")
-    public SuccessResponse returnBook(@PathVariable int id) {
+    public SuccessResponse returnBook(
+            @Parameter(in = ParameterIn.PATH, name = "id", description = "BorrowedBook ID") @PathVariable int id) {
         borrowedBookService.returnBook(id);
 
         return new SuccessResponse(CustomMessages.DELETE_IS_SUCCESSFUL);
