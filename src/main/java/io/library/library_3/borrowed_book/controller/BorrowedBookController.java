@@ -78,7 +78,7 @@ public class BorrowedBookController {
 
     // Update
     @PutMapping("/{id}")
-    public BorrowedBookReadingDTO updateStudentBorrowedBookDate(@PathVariable int id,
+    public BorrowedBookReadingDTO updateBorrowedBookDate(@PathVariable int id,
             @Valid @RequestBody BorrowedBookCreationDTO dto) {
         BorrowedBook borrowedBook = borrowedBookMapper.toBorrowedBook(dto);
         borrowedBook.setId(id);
