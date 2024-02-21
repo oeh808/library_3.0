@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.library.library_3.auth.dtos.LibrarianCreationDTO;
+import io.library.library_3.auth.dtos.StudentCreationDTO;
 import io.library.library_3.auth.entity.AuthRequest;
 import io.library.library_3.auth.entity.UserInfo;
+import io.library.library_3.auth.mapper.AuthMapper;
 import io.library.library_3.auth.service.JwtService;
 import io.library.library_3.auth.service.UserInfoService;
 import io.library.library_3.librarian.service.LibrarianService;
@@ -24,9 +27,11 @@ public class AuthController {
     private LibrarianService librarianService;
     private JwtService jwtService;
     private AuthenticationManager authenticationManager;
+    private AuthMapper authMapper;
 
     public AuthController(UserInfoService userinfoService, StudentService studentService,
-            LibrarianService librarianService, JwtService jwtService, AuthenticationManager authenticationManager) {
+            LibrarianService librarianService, JwtService jwtService,
+            AuthenticationManager authenticationManager, AuthMapper authMapper) {
         this.userinfoService = userinfoService;
         this.studentService = studentService;
         this.librarianService = librarianService;
@@ -35,17 +40,15 @@ public class AuthController {
     }
 
     @PostMapping("/addNewUser/student")
-    public String addNewStudent(@RequestBody UserInfo userInfo) {
+    public String addNewStudent(@RequestBody StudentCreationDTO dto) {
         // TODO: Add student to database
-        // FIXME: Create DTO for creation instead of UserInfo
-        return userinfoService.addUser(userInfo);
+        return userinfoService.addUser(authMapper.toUserInfo(dto));
     }
 
     @PostMapping("/addNewUser/librarian")
-    public String addNewLibrarian(@RequestBody UserInfo userInfo) {
+    public String addNewLibrarian(@RequestBody LibrarianCreationDTO dto) {
         // TODO: Add librarian to database
-        // FIXME: Create DTO for creation instead of UserInfo
-        return userinfoService.addUser(userInfo);
+        return userinfoService.addUser(authMapper.toUserInfo(dto));
     }
 
     @PostMapping("/generateToken")
