@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -48,6 +49,7 @@ public class BorrowedBookController {
     // Create
     @Operation(description = "POST endpoint for borrowing a book by a student.", summary = "Borrow a book (Student)")
     @PostMapping("/students/{userId}/{refId}")
+    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
     public BorrowedBookReadingDTO borrowBookStudent(
             @Parameter(in = ParameterIn.PATH, name = "userId", description = "Student ID") @PathVariable int userId,
             @Parameter(in = ParameterIn.PATH, name = "refId", description = "Book Reference ID") @PathVariable String refId,
@@ -58,6 +60,7 @@ public class BorrowedBookController {
 
     @Operation(description = "POST endpoint for borrowing a book by a librarian.", summary = "Borrow a book (Librarian)")
     @PostMapping("/librarians/{userId}/{refId}")
+    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public BorrowedBookReadingDTO borrowBookLibrarian(
             @Parameter(in = ParameterIn.PATH, name = "userId", description = "Librarian ID") @PathVariable int userId,
             @Parameter(in = ParameterIn.PATH, name = "refId", description = "Book Reference ID") @PathVariable String refId,
@@ -70,12 +73,14 @@ public class BorrowedBookController {
     @Operation(description = "GET endpoint for retrieving a list of books." +
             "\n\n The books being retrieved will be in the form of Book, not BorrowedBookReadingDTO.", summary = "Get all borrowed books")
     @GetMapping()
+    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public List<Book> getBooksBorrowed() {
         return borrowedBookService.getBooksBorrowed();
     }
 
     @Operation(description = "GET endpoint for retrieving a list of users borrowing a book, identified by its reference id.", summary = "Get all users borrowing a book")
     @GetMapping("/books/{refId}")
+    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public List<UserReadingDTO> getUsersBorrowingBook(
             @Parameter(in = ParameterIn.PATH, name = "refId", description = "Book Reference ID") @PathVariable String refId) {
         return userMapper.toDTO(borrowedBookService.getUsersBorrowingBook(refId));
@@ -85,6 +90,7 @@ public class BorrowedBookController {
             +
             "\n\n The books being retrieved will be in the form of Book, not BorrowedBookReadingDTO.", summary = "Get all books borrowed by user (Student)")
     @GetMapping("/students/{userId}")
+    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
     public List<Book> getBooksBorrowedByStudent(
             @Parameter(in = ParameterIn.PATH, name = "userId", description = "Student ID") @PathVariable int userId) {
         return borrowedBookService.getBooksBorrowedByUser(userId, UserTypeCustom.STUDENT);
@@ -94,6 +100,7 @@ public class BorrowedBookController {
             +
             "\n\n The books being retrieved will be in the form of Book, not BorrowedBookReadingDTO.", summary = "Get all books borrowed by user (Librarian)")
     @GetMapping("/librarians/{userId}")
+    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public List<Book> getBooksBorrowedByLibrarian(
             @Parameter(in = ParameterIn.PATH, name = "userId", description = "Librarian ID") @PathVariable int userId) {
         return borrowedBookService.getBooksBorrowedByUser(userId, UserTypeCustom.LIBRARIAN);
@@ -102,6 +109,7 @@ public class BorrowedBookController {
     // Update
     @Operation(description = "PUT endpoint for updating a single borrowed book's due date, indentified by its id.", summary = "Update Due Date")
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
     public BorrowedBookReadingDTO updateBorrowedBookDate(
             @Parameter(in = ParameterIn.PATH, name = "id", description = "BorrowedBook ID") @PathVariable int id,
             @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of BorrowedBookCreationDTO") @RequestBody BorrowedBookCreationDTO dto) {
@@ -114,6 +122,7 @@ public class BorrowedBookController {
     // Delete
     @Operation(description = "DELETE endpoint for returning a borrowed book, identified by its id.", summary = "Return book")
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
     public SuccessResponse returnBook(
             @Parameter(in = ParameterIn.PATH, name = "id", description = "BorrowedBook ID") @PathVariable int id) {
         borrowedBookService.returnBook(id);
