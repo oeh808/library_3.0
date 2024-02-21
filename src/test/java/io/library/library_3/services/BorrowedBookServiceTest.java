@@ -81,7 +81,7 @@ public class BorrowedBookServiceTest {
 
     @BeforeAll
     public static void setUp() {
-        user = new Student("Inmo Bob", "Arts", "Selly Oak");
+        user = new Student(null, "Inmo Bob", "Arts", "Selly Oak");
         user.setId(100);
         book = new Book("War and Peace", new String[] { "Leo Tolstoy" }, 1255, 5,
                 new String[] { "FICTION", "NONFICTION" });

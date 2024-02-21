@@ -13,8 +13,8 @@ public class Librarian extends User {
         super();
     }
 
-    public Librarian(String name, int yearsOfExperience) {
-        super(name);
+    public Librarian(String username, String name, int yearsOfExperience) {
+        super(username, name);
         this.yearsOfExperience = yearsOfExperience;
     }
 

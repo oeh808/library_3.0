@@ -56,8 +56,8 @@ public class BorrowedBookRepoTest {
                 new String[] { "FICTION", "NONFICTION" });
         book2 = new Book("Da Book of War", new String[] { "Some Guy" }, 125, 13, new String[] { "COMEDY" });
 
-        user1 = new Librarian("Craig Robinson", 3);
-        user2 = new Librarian("Mark Green", 15);
+        user1 = new Librarian(null, "Craig Robinson", 3);
+        user2 = new Librarian(null, "Mark Green", 15);
 
         date = new Date(System.currentTimeMillis());
     }

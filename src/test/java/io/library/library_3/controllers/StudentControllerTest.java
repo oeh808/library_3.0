@@ -62,7 +62,7 @@ public class StudentControllerTest {
                 invalidCreationDTO.setAddress("");
                 invalidCreationDTO.setCollege("");
 
-                student = new Student("Inmo Bob", "Arts", "Selly Oak");
+                student = new Student(null, "Inmo Bob", "Arts", "Selly Oak");
                 student.setId(100);
                 students = new ArrayList<Student>();
                 students.add(student);

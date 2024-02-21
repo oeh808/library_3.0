@@ -29,8 +29,8 @@ public class StudentRepoTest {
     @BeforeAll
     public static void setUp() {
 
-        student1 = new Student("Inmo Bob", "Arts", "Selly Oak");
-        student2 = new Student("Joe Shmoe", "Arts", "Hubert Rd");
+        student1 = new Student(null, "Inmo Bob", "Arts", "Selly Oak");
+        student2 = new Student(null, "Joe Shmoe", "Arts", "Hubert Rd");
     }
 
     @BeforeEach

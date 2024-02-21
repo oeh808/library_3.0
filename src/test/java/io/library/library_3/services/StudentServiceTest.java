@@ -51,7 +51,7 @@ public class StudentServiceTest {
 
     @BeforeAll
     public static void setUp() {
-        student = new Student("Inmo Bob", "Arts", "Selly Oak");
+        student = new Student(null, "Inmo Bob", "Arts", "Selly Oak");
     }
 
     @BeforeEach

@@ -56,7 +56,7 @@ public class LibrarianControllerTest {
         invalidCreationDTO.setName("");
         invalidCreationDTO.setYearsOfExperience(-1);
 
-        librarian = new Librarian("Craig Robinson", 3);
+        librarian = new Librarian(null, "Craig Robinson", 3);
         librarian.setId(100);
 
         creationDTO = new LibrarianUpdateDTO();

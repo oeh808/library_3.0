@@ -27,6 +27,7 @@ public abstract class User {
     })
     @Column(name = "user_id")
     private int id;
+    private String username;
     private String name;
     @OneToMany
     private List<BorrowedBook> borrowedBooks;
@@ -35,7 +36,8 @@ public abstract class User {
         this.borrowedBooks = new ArrayList<BorrowedBook>();
     }
 
-    public User(String name) {
+    public User(String username, String name) {
+        this.username = username;
         this.name = name;
         this.borrowedBooks = new ArrayList<BorrowedBook>();
     }
@@ -48,6 +50,14 @@ public abstract class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getName() {

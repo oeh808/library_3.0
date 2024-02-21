@@ -30,7 +30,10 @@ public class StudentMapper {
 
     // To entity
     public Student toStudent(StudentUpdateDTO dto) {
-        Student student = new Student(dto.getName(), dto.getCollege(), dto.getAddress());
+        Student student = new Student();
+        student.setName(dto.getName());
+        student.setCollege(dto.getCollege());
+        student.setAddress(dto.getAddress());
         return student;
     }
 }

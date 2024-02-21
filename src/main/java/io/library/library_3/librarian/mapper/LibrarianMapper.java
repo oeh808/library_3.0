@@ -30,7 +30,9 @@ public class LibrarianMapper {
 
     // To Entity
     public Librarian toLibrarian(LibrarianUpdateDTO dto) {
-        Librarian librarian = new Librarian(dto.getName(), dto.getYearsOfExperience());
+        Librarian librarian = new Librarian();
+        librarian.setName(dto.getName());
+        librarian.setYearsOfExperience(dto.getYearsOfExperience());
 
         return librarian;
     }
