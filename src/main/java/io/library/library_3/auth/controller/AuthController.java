@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import io.library.library_3.auth.dtos.LibrarianCreationDTO;
 import io.library.library_3.auth.dtos.StudentCreationDTO;
 import io.library.library_3.auth.entity.AuthRequest;
-import io.library.library_3.auth.entity.UserInfo;
 import io.library.library_3.auth.mapper.AuthMapper;
 import io.library.library_3.auth.service.JwtService;
 import io.library.library_3.auth.service.UserInfoService;
@@ -41,13 +40,15 @@ public class AuthController {
 
     @PostMapping("/addNewUser/student")
     public String addNewStudent(@RequestBody StudentCreationDTO dto) {
-        // TODO: Add student to database
+        // FIXME: Handle duplicate usernames
+        studentService.signUpStudent(authMapper.toStudent(dto));
         return userinfoService.addUser(authMapper.toUserInfo(dto));
     }
 
     @PostMapping("/addNewUser/librarian")
     public String addNewLibrarian(@RequestBody LibrarianCreationDTO dto) {
-        // TODO: Add librarian to database
+        // FIXME: Handle duplicate usernames
+        librarianService.addLibrarian(authMapper.toLibrarian(dto));
         return userinfoService.addUser(authMapper.toUserInfo(dto));
     }
 
