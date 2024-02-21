@@ -14,8 +14,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "Borrowed_Books")
 public class BorrowedBook {
     @Id
@@ -30,48 +34,9 @@ public class BorrowedBook {
     @Temporal(TemporalType.DATE)
     private Date dateDue;
 
-    public BorrowedBook() {
-
-    }
-
     public BorrowedBook(Book book, User user, Date dateDue) {
         this.book = book;
         this.user = user;
         this.dateDue = dateDue;
     }
-
-    // Getters and Setters
-    // ______________________________________________________________________________
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Date getDateDue() {
-        return dateDue;
-    }
-
-    public void setDateDue(Date dateDue) {
-        this.dateDue = dateDue;
-    }
-
 }
