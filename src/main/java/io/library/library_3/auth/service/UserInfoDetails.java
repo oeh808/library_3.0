@@ -12,12 +12,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import io.library.library_3.auth.entity.UserInfo;
 
 public class UserInfoDetails implements UserDetails {
-    private String name;
+    private String username;
     private String password;
     private List<GrantedAuthority> authorities;
 
     public UserInfoDetails(UserInfo userInfo) {
-        name = userInfo.getName();
+        username = userInfo.getUsername();
         password = userInfo.getPassword();
         authorities = Arrays.stream(userInfo.getRoles().split(","))
                 .map(SimpleGrantedAuthority::new)
@@ -36,7 +36,7 @@ public class UserInfoDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return username;
     }
 
     @Override
