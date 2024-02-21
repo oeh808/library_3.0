@@ -18,6 +18,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -55,21 +56,21 @@ public class StudentController {
 
     @Operation(description = "GET endpoint for retrieving a list of students with the same name.", summary = "Get all students by name")
     @GetMapping("/byName")
-    public List<StudentReadingDTO> getStudentsByName(@Parameter(name = "Student Name") @RequestBody String name) {
+    public List<StudentReadingDTO> getStudentsByName(@Parameter(name = "name") @RequestParam String name) {
         return studentMapper.toReadingDTO(studentService.getStudentsByName(name));
     }
 
     @Operation(description = "GET endpoint for retrieving a list of students with the same address.", summary = "Get all students by address")
     @GetMapping("/byAddress")
     public List<StudentReadingDTO> getStudentsByAdress(
-            @Parameter(name = "Student Address") @RequestBody String address) {
+            @Parameter(name = "address") @RequestParam String address) {
         return studentMapper.toReadingDTO(studentService.getStudentsByAdress(address));
     }
 
     @Operation(description = "GET endpoint for retrieving a list of students with the same college.", summary = "Get all students by college")
     @GetMapping("/byCollege")
     public List<StudentReadingDTO> getStudentsByCollege(
-            @Parameter(name = "Student College") @RequestBody String college) {
+            @Parameter(name = "college") @RequestParam String college) {
         return studentMapper.toReadingDTO(studentService.getStudentsByCollege(college));
     }
 
