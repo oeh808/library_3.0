@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.library.library_3.custom_messages.CustomMessages;
 import io.library.library_3.custom_messages.SuccessResponse;
 import io.library.library_3.student.dtos.StudentReadingDTO;
-import io.library.library_3.student.dtos.StudentRegisterationDTO;
+import io.library.library_3.student.dtos.StudentUpdateDTO;
 import io.library.library_3.student.entity.Student;
 import io.library.library_3.student.mapper.StudentMapper;
 import io.library.library_3.student.service.StudentService;
@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
-import org.springframework.web.bind.annotation.PostMapping;
+// import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,12 +40,16 @@ public class StudentController {
     }
 
     // Create
-    @Operation(description = "POST endpoint for signing up a student.", summary = "Sign up a student")
-    @PostMapping()
-    public StudentReadingDTO signUpStudent(
-            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of StudentRegisterationDTO") @RequestBody StudentRegisterationDTO dto) {
-        return studentMapper.toReadingDTO(studentService.signUpStudent(studentMapper.toStudent(dto)));
-    }
+    // @Operation(description = "POST endpoint for signing up a student.", summary =
+    // "Sign up a student")
+    // @PostMapping()
+    // public StudentReadingDTO signUpStudent(
+    // @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description =
+    // "Must conform to required properties of StudentRegisterationDTO")
+    // @RequestBody StudentRegisterationDTO dto) {
+    // return
+    // studentMapper.toReadingDTO(studentService.signUpStudent(studentMapper.toStudent(dto)));
+    // }
 
     // Read
     @Operation(description = "GET endpoint for retrieving a list of students.", summary = "Get all students")
@@ -92,7 +96,7 @@ public class StudentController {
     @PutMapping("/{id}")
     public StudentReadingDTO updateStudent(
             @Parameter(in = ParameterIn.PATH, name = "id", description = "Student ID") @PathVariable int id,
-            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of StudentRegisterationDTO") @RequestBody StudentRegisterationDTO dto) {
+            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of StudentUpdateDTO") @RequestBody StudentUpdateDTO dto) {
         Student student = studentMapper.toStudent(dto);
         student.setId(id);
         return studentMapper.toReadingDTO(studentService.updateStudent(student));

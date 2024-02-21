@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PositiveOrZero;
 
-public class LibrarianCreationDTO {
+public class LibrarianUpdateDTO {
     @NotBlank(message = "A librarian must have a name.")
     @Schema(requiredProperties = { "Cannot be null", "Cannot be empty" })
     private String name;
@@ -12,7 +12,7 @@ public class LibrarianCreationDTO {
     @Schema(minimum = "0")
     private int yearsOfExperience = 0;
 
-    public LibrarianCreationDTO() {
+    public LibrarianUpdateDTO() {
 
     }
 

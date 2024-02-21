@@ -7,6 +7,7 @@ import io.library.library_3.user.entity.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -18,7 +19,7 @@ import jakarta.persistence.TemporalType;
 @Table(name = "Borrowed_Books")
 public class BorrowedBook {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "refId")

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import io.library.library_3.librarian.dtos.LibrarianCreationDTO;
+import io.library.library_3.librarian.dtos.LibrarianUpdateDTO;
 import io.library.library_3.librarian.dtos.LibrarianReadingDTO;
 import io.library.library_3.librarian.entity.Librarian;
 
@@ -29,7 +29,7 @@ public class LibrarianMapper {
     }
 
     // To Entity
-    public Librarian toLibrarian(LibrarianCreationDTO dto) {
+    public Librarian toLibrarian(LibrarianUpdateDTO dto) {
         Librarian librarian = new Librarian(dto.getName(), dto.getYearsOfExperience());
 
         return librarian;

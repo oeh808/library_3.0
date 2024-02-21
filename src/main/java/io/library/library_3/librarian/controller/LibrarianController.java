@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.library.library_3.custom_messages.CustomMessages;
 import io.library.library_3.custom_messages.SuccessResponse;
-import io.library.library_3.librarian.dtos.LibrarianCreationDTO;
+import io.library.library_3.librarian.dtos.LibrarianUpdateDTO;
 import io.library.library_3.librarian.dtos.LibrarianReadingDTO;
 import io.library.library_3.librarian.entity.Librarian;
 import io.library.library_3.librarian.mapper.LibrarianMapper;
@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
-import org.springframework.web.bind.annotation.PostMapping;
+// import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -38,15 +38,19 @@ public class LibrarianController {
         this.librarianMapper = librarianMapper;
     }
 
-    // Create
-    @Operation(description = "POST endpoint for adding a librarian.", summary = "Add a librarian")
-    @PostMapping()
-    public LibrarianReadingDTO addLibrarian(
-            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of LibrarianCreationDTO") @RequestBody LibrarianCreationDTO dto) {
-        Librarian librarian = librarianMapper.toLibrarian(dto);
+    // // Create
+    // @Operation(description = "POST endpoint for adding a librarian.", summary =
+    // "Add a librarian")
+    // @PostMapping()
+    // public LibrarianReadingDTO addLibrarian(
+    // @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description =
+    // "Must conform to required properties of LibrarianCreationDTO") @RequestBody
+    // LibrarianCreationDTO dto) {
+    // Librarian librarian = librarianMapper.toLibrarian(dto);
 
-        return librarianMapper.toReadingDTO(librarianService.addLibrarian(librarian));
-    }
+    // return
+    // librarianMapper.toReadingDTO(librarianService.addLibrarian(librarian));
+    // }
 
     // Read
     @Operation(description = "GET endpoint for retrieving a list of librarians.", summary = "Get all librarians")
@@ -66,7 +70,7 @@ public class LibrarianController {
     @Operation(description = "PUT endpoint for updating a single librarian by their id.", summary = "Update librarian")
     @PutMapping("/{id}")
     public LibrarianReadingDTO updateLibrarian(@PathVariable int id,
-            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of LibrarianCreationDTO") @RequestBody LibrarianCreationDTO dto) {
+            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of LibrarianUpdateDTO") @RequestBody LibrarianUpdateDTO dto) {
         Librarian librarian = librarianMapper.toLibrarian(dto);
         librarian.setId(id);
 

@@ -25,7 +25,7 @@ import io.library.library_3.error_handling.exceptions.EntityNotFoundException;
 import io.library.library_3.student.StudentExceptionMessages;
 import io.library.library_3.student.controller.StudentController;
 import io.library.library_3.student.dtos.StudentReadingDTO;
-import io.library.library_3.student.dtos.StudentRegisterationDTO;
+import io.library.library_3.student.dtos.StudentUpdateDTO;
 import io.library.library_3.student.entity.Student;
 import io.library.library_3.student.mapper.StudentMapper;
 import io.library.library_3.student.service.StudentService;
@@ -45,11 +45,11 @@ public class StudentControllerTest {
 
         ObjectMapper mapper = new ObjectMapper();
 
-        private static StudentRegisterationDTO invalidCreationDTO;
+        private static StudentUpdateDTO invalidCreationDTO;
 
         private static Student student;
 
-        private static StudentRegisterationDTO creationDTO;
+        private static StudentUpdateDTO creationDTO;
         private static StudentReadingDTO readingDTO;
 
         private static List<Student> students;
@@ -57,7 +57,7 @@ public class StudentControllerTest {
 
         @BeforeAll
         public static void setUp() {
-                invalidCreationDTO = new StudentRegisterationDTO();
+                invalidCreationDTO = new StudentUpdateDTO();
                 invalidCreationDTO.setName("");
                 invalidCreationDTO.setAddress("");
                 invalidCreationDTO.setCollege("");
@@ -67,7 +67,7 @@ public class StudentControllerTest {
                 students = new ArrayList<Student>();
                 students.add(student);
 
-                creationDTO = new StudentRegisterationDTO();
+                creationDTO = new StudentUpdateDTO();
                 creationDTO.setName(student.getName());
                 creationDTO.setAddress(student.getAddress());
                 creationDTO.setCollege(student.getCollege());
@@ -81,7 +81,7 @@ public class StudentControllerTest {
         @BeforeEach
         public void setUpMocks() {
                 student.setId(100);
-                when(studentMapper.toStudent(any(StudentRegisterationDTO.class))).thenReturn(student);
+                when(studentMapper.toStudent(any(StudentUpdateDTO.class))).thenReturn(student);
                 when(studentMapper.toReadingDTO(student)).thenReturn(readingDTO);
                 when(studentMapper.toReadingDTO(students)).thenReturn(studentsDTOS);
         }

@@ -3,7 +3,7 @@ package io.library.library_3.student.dtos;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 
-public class StudentRegisterationDTO {
+public class StudentUpdateDTO {
     @NotBlank(message = "A student must have a name.")
     @Schema(requiredProperties = { "Cannot be null", "Cannot be empty" })
     private String name;
@@ -14,7 +14,7 @@ public class StudentRegisterationDTO {
     @Schema(requiredProperties = { "Cannot be null", "Cannot be empty" })
     private String college;
 
-    public StudentRegisterationDTO() {
+    public StudentUpdateDTO() {
 
     }
 

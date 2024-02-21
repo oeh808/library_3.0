@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.library.library_3.error_handling.exceptions.EntityNotFoundException;
 import io.library.library_3.librarian.LibrarianExceptionMessages;
 import io.library.library_3.librarian.controller.LibrarianController;
-import io.library.library_3.librarian.dtos.LibrarianCreationDTO;
+import io.library.library_3.librarian.dtos.LibrarianUpdateDTO;
 import io.library.library_3.librarian.dtos.LibrarianReadingDTO;
 import io.library.library_3.librarian.entity.Librarian;
 import io.library.library_3.librarian.mapper.LibrarianMapper;
@@ -44,22 +44,22 @@ public class LibrarianControllerTest {
 
     ObjectMapper mapper = new ObjectMapper();
 
-    private static LibrarianCreationDTO invalidCreationDTO;
+    private static LibrarianUpdateDTO invalidCreationDTO;
 
     private static Librarian librarian;
-    private static LibrarianCreationDTO creationDTO;
+    private static LibrarianUpdateDTO creationDTO;
     private static LibrarianReadingDTO readingDTO;
 
     @BeforeAll
     public static void setUp() {
-        invalidCreationDTO = new LibrarianCreationDTO();
+        invalidCreationDTO = new LibrarianUpdateDTO();
         invalidCreationDTO.setName("");
         invalidCreationDTO.setYearsOfExperience(-1);
 
         librarian = new Librarian("Craig Robinson", 3);
         librarian.setId(100);
 
-        creationDTO = new LibrarianCreationDTO();
+        creationDTO = new LibrarianUpdateDTO();
         creationDTO.setName(librarian.getName());
         creationDTO.setYearsOfExperience(librarian.getYearsOfExperience());
 
@@ -69,7 +69,7 @@ public class LibrarianControllerTest {
     @BeforeEach
     public void setUpMocks() {
         librarian.setId(100);
-        when(librarianMapper.toLibrarian(any(LibrarianCreationDTO.class))).thenReturn(librarian);
+        when(librarianMapper.toLibrarian(any(LibrarianUpdateDTO.class))).thenReturn(librarian);
         when(librarianMapper.toReadingDTO(librarian)).thenReturn(readingDTO);
     }
 
