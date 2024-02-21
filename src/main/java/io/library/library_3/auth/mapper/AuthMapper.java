@@ -24,7 +24,7 @@ public class AuthMapper {
         UserInfo user = new UserInfo();
         user.setUsername(dto.getUsername());
         user.setPassword(dto.getPassword());
-        user.setRoles("ROLE_STUDENT, ROLE_LIBRARIAN");
+        user.setRoles("ROLE_LIBRARIAN,ROLE_STUDENT");
 
         return user;
     }
