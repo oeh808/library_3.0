@@ -36,6 +36,7 @@ public class AuthController {
         this.librarianService = librarianService;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
+        this.authMapper = authMapper;
     }
 
     @PostMapping("/addNewUser/student")
