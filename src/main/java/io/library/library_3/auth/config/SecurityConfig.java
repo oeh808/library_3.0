@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/auth/welcome", "/auth/addNewUser/**", "/auth/generateToken")
                         .permitAll())
-                .authorizeHttpRequests(requests -> requests.requestMatchers("/auth/user/**").authenticated())
+                .authorizeHttpRequests(requests -> requests.requestMatchers("/books/**").authenticated())
                 .authorizeHttpRequests(requests -> requests.requestMatchers("/auth/admin/**").authenticated())
                 .sessionManagement(management -> management
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
