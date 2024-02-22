@@ -41,16 +41,16 @@ public class AuthController {
 
     @PostMapping("/addNewUser/student")
     public String addNewStudent(@RequestBody StudentCreationDTO dto) {
-        // FIXME: Handle duplicate usernames
+        String res = userinfoService.addUser(authMapper.toUserInfo(dto));
         studentService.signUpStudent(authMapper.toStudent(dto));
-        return userinfoService.addUser(authMapper.toUserInfo(dto));
+        return res;
     }
 
     @PostMapping("/addNewUser/librarian")
     public String addNewLibrarian(@RequestBody LibrarianCreationDTO dto) {
-        // FIXME: Handle duplicate usernames
+        String res = userinfoService.addUser(authMapper.toUserInfo(dto));
         librarianService.addLibrarian(authMapper.toLibrarian(dto));
-        return userinfoService.addUser(authMapper.toUserInfo(dto));
+        return res;
     }
 
     @PostMapping("/generateToken")
