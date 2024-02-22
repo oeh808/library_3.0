@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import io.jsonwebtoken.ExpiredJwtException;
 import io.library.library_3.error_handling.exceptions.DuplicateEntityException;
 import io.library.library_3.error_handling.exceptions.EntityNotFoundException;
 import io.library.library_3.error_handling.exceptions.InvalidEnumException;
@@ -79,15 +78,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ResponseBody
     public ErrorResponse handleAccessDeniedException(AccessDeniedException ex) {
-        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
-
-        return errorResponse;
-    }
-
-    @ExceptionHandler(ExpiredJwtException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ResponseBody
-    public ErrorResponse handleExpiredJwtException(ExpiredJwtException ex) {
         ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
 
         return errorResponse;
