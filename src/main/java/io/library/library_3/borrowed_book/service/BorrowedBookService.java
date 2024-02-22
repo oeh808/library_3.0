@@ -21,8 +21,8 @@ public interface BorrowedBookService {
     public List<Book> getBooksBorrowedByUser(int userId, UserTypeCustom userType);
 
     // Update
-    public BorrowedBook updateBorrowedBookDate(BorrowedBook borrowedBook);
+    public BorrowedBook updateBorrowedBookDate(int userId, BorrowedBook borrowedBook);
 
     // Delete
-    public void returnBook(int id);
+    public void returnBook(int userId, int id);
 }

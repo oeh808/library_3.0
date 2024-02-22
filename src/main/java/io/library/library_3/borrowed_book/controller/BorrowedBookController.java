@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -114,27 +113,28 @@ public class BorrowedBookController {
 
     // Update
     @Operation(description = "PUT endpoint for updating a single borrowed book's due date, indentified by its id.", summary = "Update Due Date")
-    @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
-    // FIXME: Use pre authorize instead of post authorize
-    @PostAuthorize("returnObject.userId == authentication.principal.id or hasAuthority('ROLE_LIBRARIAN')")
+    @PutMapping("/{userId}/{id}")
+    @PreAuthorize("hasAuthority('ROLE_STUDENT') and " +
+            "(#userId == authentication.principal.id or hasAuthority('ROLE_LIBRARIAN'))")
     public BorrowedBookReadingDTO updateBorrowedBookDate(
+            @Parameter(in = ParameterIn.PATH, name = "userId", description = "User ID") @PathVariable int userId,
             @Parameter(in = ParameterIn.PATH, name = "id", description = "BorrowedBook ID") @PathVariable int id,
             @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of BorrowedBookCreationDTO") @RequestBody BorrowedBookCreationDTO dto) {
         BorrowedBook borrowedBook = borrowedBookMapper.toBorrowedBook(dto);
         borrowedBook.setId(id);
 
-        return borrowedBookMapper.toDTO(borrowedBookService.updateBorrowedBookDate(borrowedBook));
+        return borrowedBookMapper.toDTO(borrowedBookService.updateBorrowedBookDate(userId, borrowedBook));
     }
 
     // Delete
     @Operation(description = "DELETE endpoint for returning a borrowed book, identified by its id.", summary = "Return book")
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
-    // TODO: Add an auth guard to ensure users can only return their own books
+    @DeleteMapping("/{userId}/{id}")
+    @PreAuthorize("hasAuthority('ROLE_STUDENT') and " +
+            "#userId == authentication.principal.id")
     public SuccessResponse returnBook(
+            @Parameter(in = ParameterIn.PATH, name = "userId", description = "User ID") @PathVariable int userId,
             @Parameter(in = ParameterIn.PATH, name = "id", description = "BorrowedBook ID") @PathVariable int id) {
-        borrowedBookService.returnBook(id);
+        borrowedBookService.returnBook(userId, id);
 
         return new SuccessResponse(CustomMessages.DELETE_IS_SUCCESSFUL);
     }

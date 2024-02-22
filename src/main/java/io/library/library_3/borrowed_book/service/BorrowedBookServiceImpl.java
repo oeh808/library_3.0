@@ -134,8 +134,12 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
     }
 
     @Override
-    public BorrowedBook updateBorrowedBookDate(BorrowedBook borrowedBook) {
+    public BorrowedBook updateBorrowedBookDate(int userId, BorrowedBook borrowedBook) {
         BorrowedBook bb = getBorrowedBook(borrowedBook.getId());
+        if (userId != bb.getUser().getId()) {
+            throw new UnauthorizedActionException("Access Denied");
+        }
+
         borrowedBook.setBook(bb.getBook());
         borrowedBook.setUser(bb.getUser());
 
@@ -143,9 +147,12 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
     }
 
     @Override
-    public void returnBook(int id) {
+    public void returnBook(int userId, int id) {
         // Check that borrowed book exists (Exception handling in getBorrowedBook)
         BorrowedBook borrowedBook = getBorrowedBook(id);
+        if (userId != borrowedBook.getUser().getId()) {
+            throw new UnauthorizedActionException("Access Denied");
+        }
 
         // Increment quantity of books in stock
         Book book = borrowedBook.getBook();
