@@ -51,7 +51,7 @@ public class LibrarianServiceTest {
 
     @BeforeAll
     public static void setUp() {
-        librarian = new Librarian(null, "Craig Robinson", 3);
+        librarian = new Librarian("MrGreen", "Craig Robinson", 3);
         librarian.setId(100);
     }
 
