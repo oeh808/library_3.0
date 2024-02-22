@@ -22,6 +22,7 @@ import io.library.library_3.librarian.entity.Librarian;
 import io.library.library_3.librarian.service.LibrarianService;
 import io.library.library_3.student.entity.Student;
 import io.library.library_3.student.service.StudentService;
+import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/auth")
@@ -44,7 +45,9 @@ public class AuthController {
         this.authMapper = authMapper;
     }
 
+    @Operation(description = "POST endpoint for creating a student.", summary = "Create a student")
     @PostMapping("/addNewUser/student")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of StudentCreationDTO")
     public String addNewStudent(@RequestBody StudentCreationDTO dto) {
         if (!userinfoService.isDuplicateUsername(dto.getUsername())) {
             Student student = studentService.signUpStudent(authMapper.toStudent(dto));
@@ -57,7 +60,9 @@ public class AuthController {
         }
     }
 
+    @Operation(description = "POST endpoint for creating a librarian.", summary = "Create a librarian")
     @PostMapping("/addNewUser/librarian")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of LibrarianCreationDTO")
     public String addNewLibrarian(@RequestBody LibrarianCreationDTO dto) {
         if (!userinfoService.isDuplicateUsername(dto.getUsername())) {
             Librarian librarian = librarianService.addLibrarian(authMapper.toLibrarian(dto));
@@ -70,6 +75,7 @@ public class AuthController {
         }
     }
 
+    @Operation(description = "POST endpoint for generating a Jwt Token given a user name and password.", summary = "Generate Jwt Token")
     @PostMapping("/generateToken")
     public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(
