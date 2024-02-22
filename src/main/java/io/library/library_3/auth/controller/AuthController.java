@@ -9,13 +9,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.library.library_3.auth.AuthExceptionMessages;
 import io.library.library_3.auth.dtos.LibrarianCreationDTO;
 import io.library.library_3.auth.dtos.StudentCreationDTO;
 import io.library.library_3.auth.entity.AuthRequest;
+import io.library.library_3.auth.entity.UserInfo;
 import io.library.library_3.auth.mapper.AuthMapper;
 import io.library.library_3.auth.service.JwtService;
 import io.library.library_3.auth.service.UserInfoService;
+import io.library.library_3.error_handling.exceptions.DuplicateEntityException;
+import io.library.library_3.librarian.entity.Librarian;
 import io.library.library_3.librarian.service.LibrarianService;
+import io.library.library_3.student.entity.Student;
 import io.library.library_3.student.service.StudentService;
 
 @RestController
@@ -41,16 +46,28 @@ public class AuthController {
 
     @PostMapping("/addNewUser/student")
     public String addNewStudent(@RequestBody StudentCreationDTO dto) {
-        String res = userinfoService.addUser(authMapper.toUserInfo(dto));
-        studentService.signUpStudent(authMapper.toStudent(dto));
-        return res;
+        if (!userinfoService.isDuplicateUsername(dto.getUsername())) {
+            Student student = studentService.signUpStudent(authMapper.toStudent(dto));
+            UserInfo user = authMapper.toUserInfo(dto);
+            user.setId(student.getId());
+
+            return userinfoService.addUser(user);
+        } else {
+            throw new DuplicateEntityException(AuthExceptionMessages.USERNAME_ALREADY_EXISTS(dto.getUsername()));
+        }
     }
 
     @PostMapping("/addNewUser/librarian")
     public String addNewLibrarian(@RequestBody LibrarianCreationDTO dto) {
-        String res = userinfoService.addUser(authMapper.toUserInfo(dto));
-        librarianService.addLibrarian(authMapper.toLibrarian(dto));
-        return res;
+        if (!userinfoService.isDuplicateUsername(dto.getUsername())) {
+            Librarian librarian = librarianService.addLibrarian(authMapper.toLibrarian(dto));
+            UserInfo user = authMapper.toUserInfo(dto);
+            user.setId(librarian.getId());
+
+            return userinfoService.addUser(user);
+        } else {
+            throw new DuplicateEntityException(AuthExceptionMessages.USERNAME_ALREADY_EXISTS(dto.getUsername()));
+        }
     }
 
     @PostMapping("/generateToken")

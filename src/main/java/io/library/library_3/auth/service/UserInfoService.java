@@ -9,10 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import io.library.library_3.auth.AuthExceptionMessages;
 import io.library.library_3.auth.entity.UserInfo;
 import io.library.library_3.auth.repo.UserInfoRepo;
-import io.library.library_3.error_handling.exceptions.DuplicateEntityException;
 
 @Service
 public class UserInfoService implements UserDetailsService {
@@ -33,14 +31,14 @@ public class UserInfoService implements UserDetailsService {
     }
 
     public String addUser(UserInfo userInfo) {
-        Optional<UserInfo> opUser = repository.findByUsername(userInfo.getUsername());
-
-        if (opUser.isPresent()) {
-            throw new DuplicateEntityException(AuthExceptionMessages.USERNAME_ALREADY_EXISTS(userInfo.getUsername()));
-        }
-
         userInfo.setPassword(encoder.encode(userInfo.getPassword()));
         repository.save(userInfo);
         return "User Added Successfully";
+    }
+
+    public boolean isDuplicateUsername(String username) {
+        Optional<UserInfo> opUser = repository.findByUsername(username);
+
+        return opUser.isPresent();
     }
 }
