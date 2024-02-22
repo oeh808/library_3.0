@@ -94,7 +94,8 @@ public class StudentController {
 
     @Operation(description = "GET endpoint for retrieving a single student by their id.", summary = "Get student by id")
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
+    @PreAuthorize("hasAuthority('ROLE_STUDENT') and " +
+            "(#id == authentication.principal.id or hasAuthority('ROLE_LIBRARIAN'))")
     public StudentReadingDTO getStudent(
             @Parameter(in = ParameterIn.PATH, name = "id", description = "Student ID") @PathVariable int id) {
         return studentMapper.toReadingDTO(studentService.getStudent(id));
@@ -103,7 +104,8 @@ public class StudentController {
     // Update
     @Operation(description = "PUT endpoint for updating a single student by their id.", summary = "Update student")
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
+    @PreAuthorize("hasAuthority('ROLE_STUDENT') and " +
+            "(#id == authentication.principal.id or hasAuthority('ROLE_LIBRARIAN'))")
     public StudentReadingDTO updateStudent(
             @Parameter(in = ParameterIn.PATH, name = "id", description = "Student ID") @PathVariable int id,
             @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of StudentUpdateDTO") @RequestBody StudentUpdateDTO dto) {
