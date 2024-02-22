@@ -42,7 +42,9 @@ public class SecurityConfig {
                                 "/swagger-ui/**", "/api-docs/**")
                         .permitAll())
                 .authorizeHttpRequests(requests -> requests.requestMatchers("/books/**").authenticated())
-                .authorizeHttpRequests(requests -> requests.requestMatchers("/auth/admin/**").authenticated())
+                .authorizeHttpRequests(requests -> requests.requestMatchers("/students/**").authenticated())
+                .authorizeHttpRequests(requests -> requests.requestMatchers("/librarians/**").authenticated())
+                .authorizeHttpRequests(requests -> requests.requestMatchers("/borrowing/**").authenticated())
                 .sessionManagement(management -> management
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
