@@ -42,23 +42,27 @@ public class BookController {
     }
 
     // Create
-    @Operation(description = "POST endpoint for creating a book.", summary = "Create a book")
+    @Operation(description = "POST endpoint for creating a book." +
+            "\n\n Can only be done by librarians.", summary = "Create a book")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of BookCreationDTO")
     @PostMapping()
     @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public Book addBook(
-            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of BookCreationDTO") @RequestBody BookCreationDTO dto) {
+            @Valid @RequestBody BookCreationDTO dto) {
         return bookService.createBook(bookMapper.toBook(dto));
     }
 
     // Read
-    @Operation(description = "GET endpoint for retrieving a list of books.", summary = "Get all books")
+    @Operation(description = "GET endpoint for retrieving a list of books." +
+            "\n\n Can be done by students or librarians.", summary = "Get all books")
     @GetMapping()
     @PreAuthorize("hasAuthority('ROLE_STUDENT')")
     public List<Book> getBooks() {
         return bookService.getBooks();
     }
 
-    @Operation(description = "GET endpoint for retrieving a list of books INCLUDING a regex.", summary = "Get all books by title regex")
+    @Operation(description = "GET endpoint for retrieving a list of books INCLUDING a regex." +
+            "\n\n Can be done by students or librarians.", summary = "Get all books by title regex")
     @GetMapping("/byTitle/{title}")
     @PreAuthorize("hasAuthority('ROLE_STUDENT')")
     public List<Book> getBooksByTitle(
@@ -66,14 +70,16 @@ public class BookController {
         return bookService.getBooksByTitle(title);
     }
 
-    @Operation(description = "GET endpoint for retrieving a list of books INCLUDING a list of authors.", summary = "Get all books by authors")
+    @Operation(description = "GET endpoint for retrieving a list of books INCLUDING a list of authors." +
+            "\n\n Can be done by students or librarians.", summary = "Get all books by authors")
     @GetMapping("/byAuthors")
     @PreAuthorize("hasAuthority('ROLE_STUDENT')")
     public List<Book> getBooksByAuthors(@Parameter(name = "Authors") @RequestBody String[] authors) {
         return bookService.getBooks(authors, BookSearchType.AUTHORS);
     }
 
-    @Operation(description = "GET endpoint for retrieving a list of books INCLUDING a list of categories.", summary = "Get all books by categories")
+    @Operation(description = "GET endpoint for retrieving a list of books INCLUDING a list of categories." +
+            "\n\n Can be done by students or librarians.", summary = "Get all books by categories")
     @GetMapping("/byCategories")
     @PreAuthorize("hasAuthority('ROLE_STUDENT')")
     public List<Book> getBooksByCategories(
@@ -82,7 +88,8 @@ public class BookController {
         return bookService.getBooks(categories, BookSearchType.CATEGORIES);
     }
 
-    @Operation(description = "GET endpoint for retrieving a single book by its reference id (refId).", summary = "Get book by refId")
+    @Operation(description = "GET endpoint for retrieving a single book by its reference id (refId)." +
+            "\n\n Can be done by students or librarians.", summary = "Get book by refId")
     @GetMapping("/{refId}")
     @PreAuthorize("hasAuthority('ROLE_STUDENT')")
     public Book getBook(
@@ -91,12 +98,14 @@ public class BookController {
     }
 
     // Update
-    @Operation(description = "PUT endpoint for updating a single book by its reference id.", summary = "Update book")
+    @Operation(description = "PUT endpoint for updating a single book by its reference id." +
+            "\n\n Can only be done by librarians.", summary = "Update book")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of BookCreationDTO")
     @PutMapping("/{refId}")
     @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public Book updateBook(
             @Parameter(in = ParameterIn.PATH, name = "refId", description = "Reference ID") @PathVariable String refId,
-            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of BookCreationDTO") @RequestBody BookCreationDTO dto) {
+            @Valid @RequestBody BookCreationDTO dto) {
         Book book = bookMapper.toBook(dto);
         book.setRefId(refId);
 
@@ -104,7 +113,8 @@ public class BookController {
     }
 
     // Delete
-    @Operation(description = "DELETE endpoint for deleting a book by its reference id.", summary = "Delete book")
+    @Operation(description = "DELETE endpoint for deleting a book by its reference id." +
+            "\n\n Can only be done by librarians.", summary = "Delete book")
     @DeleteMapping("/{refId}")
     @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public SuccessResponse deleteBook(

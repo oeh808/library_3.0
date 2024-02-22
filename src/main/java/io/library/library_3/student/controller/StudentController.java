@@ -42,34 +42,25 @@ public class StudentController {
         this.studentMapper = studentMapper;
     }
 
-    // Create
-    // @Operation(description = "POST endpoint for signing up a student.", summary =
-    // "Sign up a student")
-    // @PostMapping()
-    // public StudentReadingDTO signUpStudent(
-    // @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description =
-    // "Must conform to required properties of StudentRegisterationDTO")
-    // @RequestBody StudentRegisterationDTO dto) {
-    // return
-    // studentMapper.toReadingDTO(studentService.signUpStudent(studentMapper.toStudent(dto)));
-    // }
-
     // Read
-    @Operation(description = "GET endpoint for retrieving a list of students.", summary = "Get all students")
+    @Operation(description = "GET endpoint for retrieving a list of students." +
+            "\n\n Can only be done by librarians.", summary = "Get all students")
     @GetMapping()
     @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public List<StudentReadingDTO> getStudents() {
         return studentMapper.toReadingDTO(studentService.getStudents());
     }
 
-    @Operation(description = "GET endpoint for retrieving a list of students with the same name.", summary = "Get all students by name")
+    @Operation(description = "GET endpoint for retrieving a list of students with the same name." +
+            "\n\n Can only be done by librarians.", summary = "Get all students by name")
     @GetMapping("/byName")
     @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public List<StudentReadingDTO> getStudentsByName(@Parameter(name = "name") @RequestParam String name) {
         return studentMapper.toReadingDTO(studentService.getStudentsByName(name));
     }
 
-    @Operation(description = "GET endpoint for retrieving a list of students with the same address.", summary = "Get all students by address")
+    @Operation(description = "GET endpoint for retrieving a list of students with the same address." +
+            "\n\n Can only be done by librarians.", summary = "Get all students by address")
     @GetMapping("/byAddress")
     @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public List<StudentReadingDTO> getStudentsByAdress(
@@ -77,7 +68,8 @@ public class StudentController {
         return studentMapper.toReadingDTO(studentService.getStudentsByAdress(address));
     }
 
-    @Operation(description = "GET endpoint for retrieving a list of students with the same college.", summary = "Get all students by college")
+    @Operation(description = "GET endpoint for retrieving a list of students with the same college." +
+            "\n\n Can only be done by librarians.", summary = "Get all students by college")
     @GetMapping("/byCollege")
     @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public List<StudentReadingDTO> getStudentsByCollege(
@@ -85,14 +77,16 @@ public class StudentController {
         return studentMapper.toReadingDTO(studentService.getStudentsByCollege(college));
     }
 
-    @Operation(description = "GET endpoint for retrieving a list of registered students.", summary = "Get all registered students")
+    @Operation(description = "GET endpoint for retrieving a list of registered students." +
+            "\n\n Can only be done by librarians.", summary = "Get all registered students")
     @GetMapping("/registered")
     @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public List<StudentReadingDTO> getRegisteredStudents() {
         return studentMapper.toReadingDTO(studentService.getRegisteredStudents());
     }
 
-    @Operation(description = "GET endpoint for retrieving a single student by their id.", summary = "Get student by id")
+    @Operation(description = "GET endpoint for retrieving a single student by their id." +
+            "\n\n Can only be done by librarians or students accessing their own information.", summary = "Get student by id")
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_STUDENT') and " +
             "(#id == authentication.principal.id or hasAuthority('ROLE_LIBRARIAN'))")
@@ -102,19 +96,22 @@ public class StudentController {
     }
 
     // Update
-    @Operation(description = "PUT endpoint for updating a single student by their id.", summary = "Update student")
+    @Operation(description = "PUT endpoint for updating a single student by their id." +
+            "\n\n Can only be done by librarians or students accessing their own information.", summary = "Update student")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of StudentUpdateDTO")
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_STUDENT') and " +
             "(#id == authentication.principal.id or hasAuthority('ROLE_LIBRARIAN'))")
     public StudentReadingDTO updateStudent(
             @Parameter(in = ParameterIn.PATH, name = "id", description = "Student ID") @PathVariable int id,
-            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of StudentUpdateDTO") @RequestBody StudentUpdateDTO dto) {
+            @Valid @RequestBody StudentUpdateDTO dto) {
         Student student = studentMapper.toStudent(dto);
         student.setId(id);
         return studentMapper.toReadingDTO(studentService.updateStudent(student));
     }
 
-    @Operation(description = "PUT endpoint for approving a student and setting them as registered.", summary = "Approve student")
+    @Operation(description = "PUT endpoint for approving a student and setting them as registered." +
+            "\n\n Can only be done by librarians.", summary = "Approve student")
     @PutMapping("/approve/{id}")
     @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public StudentReadingDTO approveStudent(
@@ -123,7 +120,8 @@ public class StudentController {
     }
 
     // Delete
-    @Operation(description = "DELETE endpoint for deleting a student by their id.", summary = "Delete student")
+    @Operation(description = "DELETE endpoint for deleting a student by their id." +
+            "\n\n Can only be done by librarians.", summary = "Delete student")
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public SuccessResponse removeStudent(

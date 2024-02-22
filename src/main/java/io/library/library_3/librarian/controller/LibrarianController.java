@@ -41,29 +41,17 @@ public class LibrarianController {
         this.librarianMapper = librarianMapper;
     }
 
-    // // Create
-    // @Operation(description = "POST endpoint for adding a librarian.", summary =
-    // "Add a librarian")
-    // @PostMapping()
-    // public LibrarianReadingDTO addLibrarian(
-    // @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description =
-    // "Must conform to required properties of LibrarianCreationDTO") @RequestBody
-    // LibrarianCreationDTO dto) {
-    // Librarian librarian = librarianMapper.toLibrarian(dto);
-
-    // return
-    // librarianMapper.toReadingDTO(librarianService.addLibrarian(librarian));
-    // }
-
     // Read
-    @Operation(description = "GET endpoint for retrieving a list of librarians.", summary = "Get all librarians")
+    @Operation(description = "GET endpoint for retrieving a list of librarians." +
+            "\n\n Can only be done by librarians.", summary = "Get all librarians")
     @GetMapping()
     @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public List<LibrarianReadingDTO> getLibrarians() {
         return librarianMapper.toReadingDTO(librarianService.getLibrarians());
     }
 
-    @Operation(description = "GET endpoint for retrieving a single librarian by their id.", summary = "Get librarian by id")
+    @Operation(description = "GET endpoint for retrieving a single librarian by their id." +
+            "\n\n Can only be done by librarians.", summary = "Get librarian by id")
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public LibrarianReadingDTO getLibrarian(
@@ -72,11 +60,13 @@ public class LibrarianController {
     }
 
     // Update
-    @Operation(description = "PUT endpoint for updating a single librarian by their id.", summary = "Update librarian")
+    @Operation(description = "PUT endpoint for updating a single librarian by their id." +
+            "\n\n Can only be done by librarians.", summary = "Update librarian")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of LibrarianUpdateDTO")
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public LibrarianReadingDTO updateLibrarian(@PathVariable int id,
-            @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of LibrarianUpdateDTO") @RequestBody LibrarianUpdateDTO dto) {
+            @Valid @RequestBody LibrarianUpdateDTO dto) {
         Librarian librarian = librarianMapper.toLibrarian(dto);
         librarian.setId(id);
 
@@ -84,7 +74,8 @@ public class LibrarianController {
     }
 
     // Delete
-    @Operation(description = "DELETE endpoint for deleting a librarian by their id.", summary = "Delete librarian")
+    @Operation(description = "DELETE endpoint for deleting a librarian by their id." +
+            "\n\n Can only be done by librarians.", summary = "Delete librarian")
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public SuccessResponse removeLibrarian(
