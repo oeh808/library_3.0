@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import io.library.library_3.auth.AuthExceptionMessages;
 import io.library.library_3.book.BookExceptionMessages;
 import io.library.library_3.book.entity.Book;
 import io.library.library_3.book.repo.BookRepo;
@@ -137,7 +138,7 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
     public BorrowedBook updateBorrowedBookDate(int userId, BorrowedBook borrowedBook) {
         BorrowedBook bb = getBorrowedBook(borrowedBook.getId());
         if (userId != bb.getUser().getId()) {
-            throw new UnauthorizedActionException("Access Denied");
+            throw new UnauthorizedActionException(AuthExceptionMessages.ACCESS_DENIED);
         }
 
         borrowedBook.setBook(bb.getBook());
@@ -151,7 +152,7 @@ public class BorrowedBookServiceImpl implements BorrowedBookService {
         // Check that borrowed book exists (Exception handling in getBorrowedBook)
         BorrowedBook borrowedBook = getBorrowedBook(id);
         if (userId != borrowedBook.getUser().getId()) {
-            throw new UnauthorizedActionException("Access Denied");
+            throw new UnauthorizedActionException(AuthExceptionMessages.ACCESS_DENIED);
         }
 
         // Increment quantity of books in stock
