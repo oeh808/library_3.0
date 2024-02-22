@@ -12,11 +12,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import io.library.library_3.auth.entity.UserInfo;
 
 public class UserInfoDetails implements UserDetails {
+    private int id;
     private String username;
     private String password;
     private List<GrantedAuthority> authorities;
 
     public UserInfoDetails(UserInfo userInfo) {
+        id = userInfo.getId();
         username = userInfo.getUsername();
         password = userInfo.getPassword();
         authorities = Arrays.stream(userInfo.getRoles().split(","))
@@ -37,6 +39,10 @@ public class UserInfoDetails implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public int getId() {
+        return id;
     }
 
     @Override
