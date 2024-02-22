@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -55,12 +56,14 @@ public class LibrarianController {
     // Read
     @Operation(description = "GET endpoint for retrieving a list of librarians.", summary = "Get all librarians")
     @GetMapping()
+    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public List<LibrarianReadingDTO> getLibrarians() {
         return librarianMapper.toReadingDTO(librarianService.getLibrarians());
     }
 
     @Operation(description = "GET endpoint for retrieving a single librarian by their id.", summary = "Get librarian by id")
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public LibrarianReadingDTO getLibrarian(
             @Parameter(in = ParameterIn.PATH, name = "id", description = "Librarian ID") @PathVariable int id) {
         return librarianMapper.toReadingDTO(librarianService.getLibrarian(id));
@@ -69,6 +72,7 @@ public class LibrarianController {
     // Update
     @Operation(description = "PUT endpoint for updating a single librarian by their id.", summary = "Update librarian")
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public LibrarianReadingDTO updateLibrarian(@PathVariable int id,
             @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of LibrarianUpdateDTO") @RequestBody LibrarianUpdateDTO dto) {
         Librarian librarian = librarianMapper.toLibrarian(dto);
@@ -80,6 +84,7 @@ public class LibrarianController {
     // Delete
     @Operation(description = "DELETE endpoint for deleting a librarian by their id.", summary = "Delete librarian")
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public SuccessResponse removeLibrarian(
             @Parameter(in = ParameterIn.PATH, name = "id", description = "Librarian ID") @PathVariable int id) {
         librarianService.deleteLibrarian(id);

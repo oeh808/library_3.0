@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -54,18 +55,21 @@ public class StudentController {
     // Read
     @Operation(description = "GET endpoint for retrieving a list of students.", summary = "Get all students")
     @GetMapping()
+    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public List<StudentReadingDTO> getStudents() {
         return studentMapper.toReadingDTO(studentService.getStudents());
     }
 
     @Operation(description = "GET endpoint for retrieving a list of students with the same name.", summary = "Get all students by name")
     @GetMapping("/byName")
+    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public List<StudentReadingDTO> getStudentsByName(@Parameter(name = "name") @RequestParam String name) {
         return studentMapper.toReadingDTO(studentService.getStudentsByName(name));
     }
 
     @Operation(description = "GET endpoint for retrieving a list of students with the same address.", summary = "Get all students by address")
     @GetMapping("/byAddress")
+    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public List<StudentReadingDTO> getStudentsByAdress(
             @Parameter(name = "address") @RequestParam String address) {
         return studentMapper.toReadingDTO(studentService.getStudentsByAdress(address));
@@ -73,6 +77,7 @@ public class StudentController {
 
     @Operation(description = "GET endpoint for retrieving a list of students with the same college.", summary = "Get all students by college")
     @GetMapping("/byCollege")
+    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public List<StudentReadingDTO> getStudentsByCollege(
             @Parameter(name = "college") @RequestParam String college) {
         return studentMapper.toReadingDTO(studentService.getStudentsByCollege(college));
@@ -80,12 +85,14 @@ public class StudentController {
 
     @Operation(description = "GET endpoint for retrieving a list of registered students.", summary = "Get all registered students")
     @GetMapping("/registered")
+    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public List<StudentReadingDTO> getRegisteredStudents() {
         return studentMapper.toReadingDTO(studentService.getRegisteredStudents());
     }
 
     @Operation(description = "GET endpoint for retrieving a single student by their id.", summary = "Get student by id")
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
     public StudentReadingDTO getStudent(
             @Parameter(in = ParameterIn.PATH, name = "id", description = "Student ID") @PathVariable int id) {
         return studentMapper.toReadingDTO(studentService.getStudent(id));
@@ -94,6 +101,7 @@ public class StudentController {
     // Update
     @Operation(description = "PUT endpoint for updating a single student by their id.", summary = "Update student")
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public StudentReadingDTO updateStudent(
             @Parameter(in = ParameterIn.PATH, name = "id", description = "Student ID") @PathVariable int id,
             @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of StudentUpdateDTO") @RequestBody StudentUpdateDTO dto) {
@@ -104,6 +112,7 @@ public class StudentController {
 
     @Operation(description = "PUT endpoint for approving a student and setting them as registered.", summary = "Approve student")
     @PutMapping("/approve/{id}")
+    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public StudentReadingDTO approveStudent(
             @Parameter(in = ParameterIn.PATH, name = "id", description = "Student ID") @PathVariable int id) {
         return studentMapper.toReadingDTO(studentService.approveStudent(id));
@@ -112,6 +121,7 @@ public class StudentController {
     // Delete
     @Operation(description = "DELETE endpoint for deleting a student by their id.", summary = "Delete student")
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public SuccessResponse removeStudent(
             @Parameter(in = ParameterIn.PATH, name = "id", description = "Student ID") @PathVariable int id) {
         studentService.removeStudent(id);
