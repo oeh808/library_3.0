@@ -16,6 +16,7 @@ import io.library.library_3.user.mapper.UserMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -34,6 +35,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 @RequestMapping("borrowing")
 @Tag(name = "Borrowing")
+@SecurityRequirement(name = "Authorization")
 public class BorrowedBookController {
     private BorrowedBookService borrowedBookService;
     private BorrowedBookMapper borrowedBookMapper;

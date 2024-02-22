@@ -13,6 +13,7 @@ import io.library.library_3.librarian.service.LibrarianService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("librarians")
+@SecurityRequirement(name = "Authorization")
 @Tag(name = "Librarians")
 public class LibrarianController {
     private LibrarianService librarianService;

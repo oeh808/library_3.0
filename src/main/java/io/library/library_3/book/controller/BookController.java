@@ -12,6 +12,7 @@ import io.library.library_3.enums.BookSearchType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -30,6 +31,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RestController
 @RequestMapping("books")
 @Tag(name = "Books")
+@SecurityRequirement(name = "Authorization")
 public class BookController {
     private BookService bookService;
     private BookMapper bookMapper;
