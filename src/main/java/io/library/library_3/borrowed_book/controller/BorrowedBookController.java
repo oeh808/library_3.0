@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,7 +52,8 @@ public class BorrowedBookController {
     // Create
     @Operation(description = "POST endpoint for borrowing a book by a student.", summary = "Borrow a book (Student)")
     @PostMapping("/students/{userId}/{refId}")
-    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
+    @PreAuthorize("hasAuthority('ROLE_STUDENT') and !hasAuthority('ROLE_LIBRARIAN') and " +
+            "#userId == authentication.principal.id")
     public BorrowedBookReadingDTO borrowBookStudent(
             @Parameter(in = ParameterIn.PATH, name = "userId", description = "Student ID") @PathVariable int userId,
             @Parameter(in = ParameterIn.PATH, name = "refId", description = "Book Reference ID") @PathVariable String refId,
@@ -62,7 +64,8 @@ public class BorrowedBookController {
 
     @Operation(description = "POST endpoint for borrowing a book by a librarian.", summary = "Borrow a book (Librarian)")
     @PostMapping("/librarians/{userId}/{refId}")
-    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
+    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN') and " +
+            "#userId == authentication.principal.id")
     public BorrowedBookReadingDTO borrowBookLibrarian(
             @Parameter(in = ParameterIn.PATH, name = "userId", description = "Librarian ID") @PathVariable int userId,
             @Parameter(in = ParameterIn.PATH, name = "refId", description = "Book Reference ID") @PathVariable String refId,
@@ -92,7 +95,8 @@ public class BorrowedBookController {
             +
             "\n\n The books being retrieved will be in the form of Book, not BorrowedBookReadingDTO.", summary = "Get all books borrowed by user (Student)")
     @GetMapping("/students/{userId}")
-    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
+    @PreAuthorize("hasAuthority('ROLE_STUDENT') and " +
+            "(#userId == authentication.principal.id or hasAuthority('ROLE_LIBRARIAN'))")
     public List<Book> getBooksBorrowedByStudent(
             @Parameter(in = ParameterIn.PATH, name = "userId", description = "Student ID") @PathVariable int userId) {
         return borrowedBookService.getBooksBorrowedByUser(userId, UserTypeCustom.STUDENT);
@@ -112,6 +116,8 @@ public class BorrowedBookController {
     @Operation(description = "PUT endpoint for updating a single borrowed book's due date, indentified by its id.", summary = "Update Due Date")
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_STUDENT')")
+    // FIXME: Use pre authorize instead of post authorize
+    @PostAuthorize("returnObject.userId == authentication.principal.id or hasAuthority('ROLE_LIBRARIAN')")
     public BorrowedBookReadingDTO updateBorrowedBookDate(
             @Parameter(in = ParameterIn.PATH, name = "id", description = "BorrowedBook ID") @PathVariable int id,
             @Valid @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of BorrowedBookCreationDTO") @RequestBody BorrowedBookCreationDTO dto) {
@@ -125,6 +131,7 @@ public class BorrowedBookController {
     @Operation(description = "DELETE endpoint for returning a borrowed book, identified by its id.", summary = "Return book")
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_STUDENT')")
+    // TODO: Add an auth guard to ensure users can only return their own books
     public SuccessResponse returnBook(
             @Parameter(in = ParameterIn.PATH, name = "id", description = "BorrowedBook ID") @PathVariable int id) {
         borrowedBookService.returnBook(id);
