@@ -24,6 +24,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import io.library.library_3.auth.AuthExceptionMessages;
 import io.library.library_3.book.BookExceptionMessages;
 import io.library.library_3.book.entity.Book;
 import io.library.library_3.book.repo.BookRepo;
@@ -46,7 +47,6 @@ import io.library.library_3.user.entity.User;
 
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
-// FIXME: Update tests
 public class BorrowedBookServiceTest {
     @TestConfiguration
     static class BorrowedBookServiceTestConfig {
@@ -82,7 +82,7 @@ public class BorrowedBookServiceTest {
 
     @BeforeAll
     public static void setUp() {
-        user = new Student(null, "Inmo Bob", "Arts", "Selly Oak");
+        user = new Student("Jordi", "Inmo Bob", "Arts", "Selly Oak");
         user.setId(100);
         book = new Book("War and Peace", new String[] { "Leo Tolstoy" }, 1255, 5,
                 new String[] { "FICTION", "NONFICTION" });
@@ -271,7 +271,23 @@ public class BorrowedBookServiceTest {
         when(borrowedBookRepo.findById(borrowedBook.getId())).thenReturn(Optional.of(borrowedBook));
         when(borrowedBookRepo.save(any(BorrowedBook.class))).thenReturn(expectedBB);
 
-        assertEquals(expectedBB, borrowedBookService.updateBorrowedBookDate(0, someBorrowedBook));
+        assertEquals(expectedBB, borrowedBookService.updateBorrowedBookDate(user.getId(), someBorrowedBook));
+    }
+
+    @Test
+    public void updateBorrowedBookDate_Existant_OtherUser() {
+        BorrowedBook someBorrowedBook = new BorrowedBook();
+        someBorrowedBook.setDateDue(date);
+        someBorrowedBook.setId(borrowedBook.getId());
+
+        when(borrowedBookRepo.findById(borrowedBook.getId())).thenReturn(Optional.of(borrowedBook));
+
+        UnauthorizedActionException ex = assertThrows(UnauthorizedActionException.class,
+                () -> {
+                    borrowedBookService.updateBorrowedBookDate(user.getId() - 1, someBorrowedBook);
+                });
+
+        assertTrue(ex.getMessage().contains(AuthExceptionMessages.ACCESS_DENIED));
     }
 
     @Test
@@ -284,7 +300,7 @@ public class BorrowedBookServiceTest {
 
         EntityNotFoundException ex = assertThrows(EntityNotFoundException.class,
                 () -> {
-                    borrowedBookService.updateBorrowedBookDate(0, someBorrowedBook);
+                    borrowedBookService.updateBorrowedBookDate(user.getId(), someBorrowedBook);
                 });
 
         assertTrue(ex.getMessage().contains(BorrowedBookExceptionMessages.ID_NOT_FOUND(someBorrowedBook.getId())));
@@ -294,10 +310,22 @@ public class BorrowedBookServiceTest {
     public void returnBook_Existant() {
         when(borrowedBookRepo.findById(borrowedBook.getId())).thenReturn(Optional.of(borrowedBook));
 
-        borrowedBookService.returnBook(0, borrowedBook.getId());
+        borrowedBookService.returnBook(user.getId(), borrowedBook.getId());
 
         verify(bookRepo, times(1)).save(any(Book.class));
         verify(borrowedBookRepo, times(1)).deleteById(borrowedBook.getId());
+    }
+
+    @Test
+    public void returnBook_Existant_OtherUser() {
+        when(borrowedBookRepo.findById(borrowedBook.getId())).thenReturn(Optional.of(borrowedBook));
+
+        UnauthorizedActionException ex = assertThrows(UnauthorizedActionException.class,
+                () -> {
+                    borrowedBookService.returnBook(user.getId() - 1, borrowedBook.getId());
+                });
+
+        assertTrue(ex.getMessage().contains(AuthExceptionMessages.ACCESS_DENIED));
     }
 
     @Test
@@ -306,7 +334,7 @@ public class BorrowedBookServiceTest {
 
         EntityNotFoundException ex = assertThrows(EntityNotFoundException.class,
                 () -> {
-                    borrowedBookService.returnBook(0, borrowedBook.getId() - 1);
+                    borrowedBookService.returnBook(user.getId(), borrowedBook.getId() - 1);
                 });
 
         assertTrue(ex.getMessage().contains(BorrowedBookExceptionMessages.ID_NOT_FOUND(borrowedBook.getId() - 1)));
