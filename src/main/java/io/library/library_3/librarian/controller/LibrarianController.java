@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RestController
 @RequestMapping("librarians")
 @SecurityRequirement(name = "Authorization")
+@PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
 @Tag(name = "Librarians")
 public class LibrarianController {
     private LibrarianService librarianService;
@@ -45,7 +46,6 @@ public class LibrarianController {
     @Operation(description = "GET endpoint for retrieving a list of librarians." +
             "\n\n Can only be done by librarians.", summary = "Get all librarians")
     @GetMapping()
-    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public List<LibrarianReadingDTO> getLibrarians() {
         return librarianMapper.toReadingDTO(librarianService.getLibrarians());
     }
@@ -53,7 +53,6 @@ public class LibrarianController {
     @Operation(description = "GET endpoint for retrieving a single librarian by their id." +
             "\n\n Can only be done by librarians.", summary = "Get librarian by id")
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public LibrarianReadingDTO getLibrarian(
             @Parameter(in = ParameterIn.PATH, name = "id", description = "Librarian ID") @PathVariable int id) {
         return librarianMapper.toReadingDTO(librarianService.getLibrarian(id));
@@ -64,7 +63,6 @@ public class LibrarianController {
             "\n\n Can only be done by librarians.", summary = "Update librarian")
     @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Must conform to required properties of LibrarianUpdateDTO")
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public LibrarianReadingDTO updateLibrarian(@PathVariable int id,
             @Valid @RequestBody LibrarianUpdateDTO dto) {
         Librarian librarian = librarianMapper.toLibrarian(dto);
@@ -77,7 +75,6 @@ public class LibrarianController {
     @Operation(description = "DELETE endpoint for deleting a librarian by their id." +
             "\n\n Can only be done by librarians.", summary = "Delete librarian")
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_LIBRARIAN')")
     public SuccessResponse removeLibrarian(
             @Parameter(in = ParameterIn.PATH, name = "id", description = "Librarian ID") @PathVariable int id) {
         librarianService.deleteLibrarian(id);
