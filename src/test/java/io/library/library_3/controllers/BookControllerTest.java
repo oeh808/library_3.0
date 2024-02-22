@@ -35,6 +35,7 @@ import io.library.library_3.error_handling.exceptions.InvalidEnumException;
 
 @ActiveProfiles("test")
 @WebMvcTest(BookController.class)
+// FIXME: Update tests
 public class BookControllerTest {
     @Autowired
     private MockMvc mockMvc;

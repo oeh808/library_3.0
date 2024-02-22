@@ -45,6 +45,7 @@ import io.library.library_3.user.mapper.UserMapper;
 
 @ActiveProfiles("test")
 @WebMvcTest(BorrowedBookController.class)
+// FIXME: Update tests
 public class BorrowedBookControllerTest {
         @Autowired
         private MockMvc mockMvc;
@@ -384,7 +385,7 @@ public class BorrowedBookControllerTest {
 
         @Test
         public void updateBorrowedBookDate_Existant() throws Exception {
-                when(borrowedBookService.updateBorrowedBookDate(borrowedBook)).thenReturn(borrowedBook);
+                when(borrowedBookService.updateBorrowedBookDate(0, borrowedBook)).thenReturn(borrowedBook);
 
                 mockMvc.perform(
                                 MockMvcRequestBuilders.put("/borrowing/" + borrowedBook.getId())
@@ -410,7 +411,7 @@ public class BorrowedBookControllerTest {
                 doAnswer((i) -> {
                         throw new EntityNotFoundException(
                                         BorrowedBookExceptionMessages.ID_NOT_FOUND(borrowedBook.getId()));
-                }).when(borrowedBookService).updateBorrowedBookDate(borrowedBook);
+                }).when(borrowedBookService).updateBorrowedBookDate(0, borrowedBook);
 
                 mockMvc.perform(
                                 MockMvcRequestBuilders.put("/borrowing/" + borrowedBook.getId())
@@ -432,7 +433,7 @@ public class BorrowedBookControllerTest {
                 doAnswer((i) -> {
                         throw new EntityNotFoundException(
                                         BorrowedBookExceptionMessages.ID_NOT_FOUND(borrowedBook.getId()));
-                }).when(borrowedBookService).returnBook(borrowedBook.getId());
+                }).when(borrowedBookService).returnBook(0, borrowedBook.getId());
 
                 mockMvc.perform(MockMvcRequestBuilders.delete("/borrowing/" + borrowedBook.getId()))
                                 .andExpect(status().isNotFound())

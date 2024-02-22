@@ -32,6 +32,7 @@ import io.library.library_3.librarian.service.LibrarianService;
 
 @ActiveProfiles("test")
 @WebMvcTest(LibrarianController.class)
+// FIXME: Update tests
 public class LibrarianControllerTest {
     @Autowired
     private MockMvc mockMvc;

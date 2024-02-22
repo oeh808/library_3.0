@@ -32,6 +32,7 @@ import io.library.library_3.student.service.StudentService;
 
 @ActiveProfiles("test")
 @WebMvcTest(StudentController.class)
+// FIXME: Update tests
 public class StudentControllerTest {
 
         @Autowired
