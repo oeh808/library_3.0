@@ -7,7 +7,8 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.servers.Server;
 
 @SecurityScheme(name = "Authorization", type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer")
-@OpenAPIDefinition(info = @Info(title = "Library 3.0", description = "OpenAPI documentation for Library 3.0 project", version = "1.0"), servers = @Server(url = "http://localhost:8080", description = "Dev ENV"))
+@OpenAPIDefinition(info = @Info(title = "Library", description = "OpenAPI documentation for Library 3.0 project."
+        + "\n\n Authorization is done through Jwt bearer tokens.", version = "3.0"), servers = @Server(url = "http://localhost:8080", description = "Dev ENV"))
 public class OpenApiConfig {
 
 }
